@@ -6,7 +6,7 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 export default function Header() {
   return (
-    <div className="flex flex-col fixed">
+    <div className="flex flex-col sticky top-0">
       {/*Dark top bar    */}
       <div className="bg-black w-screen h-fit text-center text-sm text-white font-extralight py-1">
         ORDER YOUR CAKES HERE
