@@ -19,7 +19,7 @@ export default function Header() {
                 <a href="/pages/order">ORDER ONLINE</a>
               </div>
               <div className="basis-1/2 text-center">
-                <a href="/pages/order">GROCERY</a>
+                <a href="/pages/order">PRODUCT LIST</a>
               </div>
             </div>
           </div>
@@ -27,12 +27,7 @@ export default function Header() {
           {/* Put logo here */}
           <div className="basis-1/3 text-center content-center">
             <a href="/">
-              {" "}
-              COMPANY NAME
-              {/* <FontAwesomeIcon
-                  className="bg-white text-black rounded-full text-xl p-14"
-                  icon={faCheck}
-                /> */}
+              {process.env.COMPANY_NAME}
             </a>
           </div>
 
