@@ -5,9 +5,41 @@ import Header from "../../components/header";
 
 export default function OrderPage(){
     return (
-        <main className="text-4xl bg-white h-screen">
+        <main className=" bg-white h-full min-h-screen">
             <Header />
-            This is the order page
+
+            <div className="bg-amber-800 text-center py-1">
+                Select From Our Variety of Products!
+            </div>
+
+            <div className="grid grid-cols-3 md:grid-cols-6 pt-10 gap-5 px-8">
+
+                <div className="justify-self-center text-center space-y-2">
+                    <div className="bg-slate-200 rounded-lg w-36 h-36">
+                        
+                    </div>
+                    <div className="">
+                        some text here
+                    </div>
+                </div>
+
+                <div className="">
+                    wagauan
+                </div>
+                <div className="">
+                    wagauan
+                </div>
+                <div className="">
+                    wagauan
+                </div>
+                <div className="">
+                    wagauan
+                </div>
+                <div className="">
+                    wagauan
+                </div>
+            </div>
+
         </main>
     )
 }

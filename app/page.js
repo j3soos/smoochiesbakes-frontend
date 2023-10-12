@@ -1,6 +1,6 @@
 // import React, { useState } from "react";
 import Header from "./components/header";
-import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   const carouselImages = [
@@ -28,9 +28,11 @@ export default function Home() {
                 chocolaty goodness you've been craving.
               </div>
               <div className="flex flex-row justify-center">
-                <button className="rounded-lg bg-black bg-opacity-30 py-3 px-5 font-bold border-2 border-black hover:text-amber-900 hover:bg-slate-300">
-                  Order Now
-                </button>
+                <Link href="pages/order">
+                  <button className="rounded-lg bg-black bg-opacity-30 py-3 px-5 font-bold border-2 border-black hover:text-amber-900 hover:bg-slate-300">
+                    Order Now
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
