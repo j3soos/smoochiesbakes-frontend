@@ -15,7 +15,7 @@ export default function OrderPage(){
             <div className="grid grid-cols-3 md:grid-cols-6 pt-10 gap-5 px-8">
 
                 <div className="justify-self-center text-center space-y-2">
-                    <div className="bg-slate-200 rounded-lg w-36 h-36">
+                    <div className="bg-[url('/order_page/bananacake.jpg')] rounded-lg w-36 h-36">
                         
                     </div>
                     <div className="">
