@@ -28,7 +28,7 @@ export default function Home() {
                 chocolaty goodness you've been craving.
               </div>
               <div className="flex flex-row justify-center">
-                <Link href="pages/order">
+                <Link href="pages/products">
                   <button className="rounded-lg bg-black bg-opacity-30 py-3 px-5 font-bold border-2 border-black hover:text-amber-900 hover:bg-slate-300">
                     Order Now
                   </button>
