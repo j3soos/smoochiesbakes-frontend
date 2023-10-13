@@ -1,3 +1,4 @@
+// app/models/product.js
 import mongoose from 'mongoose';
 
 const ProductSchema = new mongoose.Schema({
@@ -6,4 +7,4 @@ const ProductSchema = new mongoose.Schema({
   price: { type: Number, required: true },
 });
 
-export default mongoose.model('Product', ProductSchema);
+export default mongoose.models.Product || mongoose.model('Product', ProductSchema);

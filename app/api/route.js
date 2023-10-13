@@ -1,23 +1,28 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
+import Product from '../models/product';
 
-/**
- *@param {NextRequest} request
- * @param {NextResponse} response
- * @returns
- */
 
-export async function GET(request) {
-  console.log(request);
-  //   const req = new NextRequest(request);
-  //   const jsonreq = await req.json().catch((e)=>{console.log(e)})
-  //   console.log("hi");
-  return NextResponse.json({message:'created'},{status:201})
-}
+export async function GET() {
+  try {
+    const createdProduct = await Product.create({
+      name: 'First Product',
+      category: 'Pastries',
+      price: 50,
+    });
 
-// sample function to perform post req
-export async function POST(request) {
-  const req = new NextRequest(request);
-  const jsonreq = await req.json();
-  console.log(`its coming here wai, ${jsonreq}`);
-  return NextResponse.json({ result: jsonreq });
+    return NextResponse.json({
+      product: createdProduct,
+    });
+  } catch (e) {
+    console.log(e);
+    return NextResponse.json(
+      {
+        message: 'An error occurred',
+        error: e,
+      },
+      {
+        status: 400,
+      }
+    );
+  }
 }
