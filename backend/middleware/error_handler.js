@@ -1,8 +1,7 @@
 const { StatusCodes } = require('http-status-codes')
 
 const errorHandlerMiddleware = async (err, req, res, next) => {
-
-    console.log(err)
+    console.log("Middleware is working!");
 
     let customError = {
         message: err.message || 'Something went wrong, please try again later',
@@ -12,15 +11,15 @@ const errorHandlerMiddleware = async (err, req, res, next) => {
 
     // Duplication Error
     if (err.code === 11000) {
-        customError.message = 'key already exists, choose another one'
-    }
-
-    // Request time-out error
-    if (err.name === 'TimeoutError') {
+        customError.message = 'Key already exists, choose another one';
+        res.status(customError.statusCode).json(customError);
+    } else if (err.name === 'TimeoutError') {
+        // Request time-out error
         res.status(408).send('Request Timeout');
+    } else {
+        // Call next to pass control to the next middleware/error handler
+        next(err);
     }
-
-    res.status(customError.statusCode).json(customError)
 }
 
-module.exports = errorHandlerMiddleware
+module.exports = errorHandlerMiddleware;

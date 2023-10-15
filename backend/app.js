@@ -3,8 +3,8 @@ const express = require("express");
 const app = express();
 const connectDB = require("./database/connect");
 const port = process.env.BACKEND_PORT || 3001;
-const timeout = require('connect-timeout');
-const errorHandler = require('./middleware/error_handler')
+// const timeout = require('connect-timeout');
+const errorHandlerMiddleware = require('./middleware/error_handler')
 const productRouter = require("./routes/product");
 
 // extra security packages
@@ -25,7 +25,7 @@ app.use(
 app.use(helmet());
 app.use(cors());
 app.use(xss());
-app.use(timeout("10000")); // Timeout duration in milliseconds (e.g., 10000 ms = 10 seconds)
+// app.use(timeout("10000")); // Timeout duration in milliseconds (e.g., 10000 ms = 10 seconds)
 
 // routes
 app.use("/api/v1/product", productRouter);
@@ -34,7 +34,7 @@ app.get("/", (req, res) => {
   return res.json({ message: "Hello from the backend!" });
 });
 
-app.use(errorHandler)
+app.use(errorHandlerMiddleware)
 
 async function run() {
   try {
