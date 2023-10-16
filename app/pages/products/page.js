@@ -76,28 +76,28 @@ export default function OrderPage() {
         name: "Chocolate Cupcake",
         category: "Cupcakes",
         price: 3.5,
-        __v: 0
-    },
-    {
+        __v: 0,
+      },
+      {
         _id: "652c7a2f354349fb5629a7d3",
         name: "Vanilla Cupcake",
         category: "Cupcakes",
         price: 3.5,
-        __v: 0
-    },
-    {
+        __v: 0,
+      },
+      {
         _id: "652c7a44354349fb5629a7d5",
         name: "Strawberry Cupcake",
         category: "Cupcakes",
         price: 4.0,
-        __v: 0
-    },
+        __v: 0,
+      },
     ],
   };
 
   return (
     <main className=" bg-white h-full min-h-screen font-serif">
-
+      
       <Header />
 
       <div className="flex flex-row bg-[#FBA1B7] justify-center text-center py-1 text-white font-light font-sans">
@@ -106,11 +106,14 @@ export default function OrderPage() {
       </div>
 
       {/* select products (full cakes) */}
-      <div className="flex flex-col content-center justify-center text-center w-screen bg-contain h-fit gap-10 py-12">
+      <div className="flex flex-col bg-[url('/patterns/pattern02.jpg')] content-center justify-center text-center w-screen bg-contain h-fit gap-10 py-12">
         <div className="text-3xl">Full Cakes</div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 lg:gap-5 lg:px-8 font-thin">
           {products.fullcakes.map((item, name) => (
-            <div key={name} className="flex flex-col gap-3 justify-self-center text-center">
+            <div
+              key={name}
+              className="flex flex-col gap-3 justify-self-center text-center"
+            >
               <div className="bg-[url('/order_page/pastries.jpg')] bg-cover bg-no-repeat rounded-lg w-52 h-48 transition-all hover:scale-105"></div>
               <div className="">{item.name}</div>
             </div>
@@ -123,8 +126,13 @@ export default function OrderPage() {
         <div className="text-3xl">Banana Cakes</div>
         <div className="grid grid-cols-2 lg:gap-5 lg:px-8 font-thin">
           {products.bananacakes.map((item, name) => (
-            <div key={name} className="flex flex-col gap-3 content-center items-center align-middle justify-self-center text-center">
-              <div className={`bg-[url('/order_page/pastries.jpg')] bg-cover bg-no-repeat rounded-lg w-72 h-60 transition-all hover:scale-105`}></div>
+            <div
+              key={name}
+              className="flex flex-col gap-3 content-center items-center align-middle justify-self-center text-center"
+            >
+              <div
+                className={`bg-[url('/order_page/pastries.jpg')] bg-cover bg-no-repeat rounded-lg w-72 h-60 transition-all hover:scale-105`}
+              ></div>
               <div className="">{item.name}</div>
             </div>
           ))}
@@ -136,7 +144,10 @@ export default function OrderPage() {
         <div className="text-3xl">Cupcakes</div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:gap-5 lg:px-8 font-thin">
           {products.cupcakes.map((item, name) => (
-            <div key={name} className="flex flex-col gap-3 content-center items-center align-middle justify-self-center text-center">
+            <div
+              key={name}
+              className="flex flex-col gap-3 content-center items-center align-middle justify-self-center text-center"
+            >
               <div className="bg-[url('/order_page/pastries.jpg')] bg-cover bg-no-repeat rounded-lg w-52 h-48 transition-all hover:scale-105"></div>
               <div className="">{item.name}</div>
             </div>
