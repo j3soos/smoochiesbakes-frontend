@@ -11,35 +11,35 @@ export default function Header() {
       </div>
 
       {/*Light top bar */}
-      <div className="bg-white h-fit text-black py-6 px-2 font-normal text-base bg-opacity-20">
+      <div className="bg-[#FBA1B7] h-fit text-black py-6 px-2 font-normal text-base bg-opacity-20">
         <div className="flex flex-row items-center">
           <div className="basis-1/3">
-            <div className="flex flex-row">
+            {/* <div className="flex flex-row">
               <div className="basis-1/2 text-center">
                 <a href="/pages/order">ORDER ONLINE</a>
               </div>
               <div className="basis-1/2 text-center">
                 <a href="/pages/order">PRODUCT LIST</a>
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Put logo here */}
-          <div className="basis-1/3 text-center content-center">
+          <div className="basis-1/3 text-3xl text-center content-center">
             <a href="/">
               {process.env.COMPANY_NAME}
             </a>
           </div>
 
           <div className="basis-1/3">
-            <div className="flex flex-row">
+            {/* <div className="flex flex-row">
               <div className="basis-1/2 text-center">
                 <a href="/pages/order">ABOUT US</a>
               </div>
               <div className="basis-1/2 text-center">
                 <a href="/pages/order">ADMIN LOGIN</a>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
