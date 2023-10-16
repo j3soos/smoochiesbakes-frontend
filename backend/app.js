@@ -6,6 +6,7 @@ const port = process.env.BACKEND_PORT || 3001;
 // const timeout = require('connect-timeout');
 const errorHandlerMiddleware = require('./middleware/error_handler')
 const productRouter = require("./routes/product");
+const orderRouter = require("./routes/order");
 
 // extra security packages
 const helmet = require("helmet");
@@ -29,6 +30,7 @@ app.use(xss());
 
 // routes
 app.use("/api/v1/product", productRouter);
+app.use("/api/v1/order", orderRouter)
 
 app.get("/", (req, res) => {
   return res.json({ message: "Hello from the backend!" });
