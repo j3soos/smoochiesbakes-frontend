@@ -17,7 +17,6 @@ async function deleteOrder({ order }) {
 }
 
 const makeOrder = async (req, res) => {
-  let orderPlaced = "";
   const { payment, receipient, sender, products, delivery, total_price } =
     req.body;
   const endpoint =
@@ -32,11 +31,11 @@ const makeOrder = async (req, res) => {
   };
 
   const data = {
-    customerName: "Kwame Koranteng Opoku",
-    mno: "Zeepay",
+    customerName: sender.name,
+    mno: payment.mno,
     amount: "0.1",
-    msisdn: "233256619388",
-    description: "Kwame's Test",
+    msisdn: payment.msisdn,
+    description: "SmoochiesBakes Debit",
     reference: randSring(),
     callback_url: "",
   };
