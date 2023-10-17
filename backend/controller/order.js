@@ -44,7 +44,7 @@ async function orderRecon() {
         msisdn: order.payment.msisdn,
         description: "SmoochiesBakes Debit",
         reference: randSring(),
-        callback_url: "" || order.callback_url,
+        callback_url: order.callback_url,
       };
       // debit
       const debit = await axios.post(endpoint, reconPaymentData, config);
