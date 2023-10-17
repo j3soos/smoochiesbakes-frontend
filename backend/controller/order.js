@@ -149,7 +149,6 @@ const makeOrder = async (req, res) => {
       res.status(StatusCodes.OK).json({
         message: "Payment Initiated, kinldy follow prompts to make payment",
       });
-      sendEmail(sender, { body: "Go and make payment!!!!!" });
       return;
     }
   } catch (e) {
@@ -186,7 +185,7 @@ const confirmOrderPayment = async (req, res) => {
     );
     return;
   });
-
+  sendEmail(order.sender, {body:`Your payment has successfully been made. Your order number is ${order._id}. Kindly use this to track your order`})
   res.status(StatusCodes.OK);
 };
 
