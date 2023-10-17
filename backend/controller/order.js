@@ -116,4 +116,26 @@ const makeOrder = async (req, res) => {
   }
 };
 
-module.exports = { makeOrder };
+const confirmOrderPayment = async (req, res) => {
+  const order_id = req.params.order_id;
+
+  const order = await Order.findOne({_id: order_id}).catch((e)=>{
+    // send an email notification to Smoochies with order_id
+    sendEmail({email:'kk.opoku@outlook.com'},{
+      body: `An error occured, whiles reading from the db. Please update the STATUS of order:'${order_id}' to payment sucess in your system. Error: ${e.message}`,
+    })
+    return
+  })
+
+  await order.save().catch((e)=>{
+    // send an email notification to Smoochies with order_id
+    sendEmail({email:'kk.opoku@outlook.com'},{
+      body: `An error occured, whiles writing to the db. Please update the STATUS of order:'${order_id}' to payment sucess in your system. Error: ${e.message}`,
+    })
+    return
+  })
+
+  res.status(StatusCodes.OK);
+}
+
+module.exports = { makeOrder, confirmOrderPayment }
