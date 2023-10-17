@@ -1,15 +1,13 @@
 const { StatusCodes } = require("http-status-codes");
 const Order = require("../models/order");
 const axios = require("axios");
-const crypto = require('crypto')
-const {sendEmail} = require('../controller/email')
-
+const crypto = require("crypto");
+const { sendEmail } = require("../controller/email");
 
 // generate random string
 function randSring() {
-return crypto.randomBytes(5).toString('hex');
+  return crypto.randomBytes(5).toString("hex");
 }
-  
 
 // deleteOrder
 async function deleteOrder({ order }) {
@@ -17,7 +15,6 @@ async function deleteOrder({ order }) {
     console.log(error);
   });
 }
-
 
 // createOrder
 const makeOrder = async (req, res) => {
@@ -34,17 +31,11 @@ const makeOrder = async (req, res) => {
     },
   };
 
-  const data = {
-    customerName: sender.name,
-    mno: payment.mno,
-    amount: "0.01",
-    msisdn: payment.msisdn,
-    description: "SmoochiesBakes Debit",
-    reference: randSring(),
-    callback_url: "",
-  };
-
   if (
+    !recipient ||
+    !sender ||
+    !delivery ||
+    !payment ||
     !sender.name ||
     !sender.phone ||
     !recipient.name ||
@@ -60,96 +51,113 @@ const makeOrder = async (req, res) => {
       message: "Bad request, kindly try again",
     });
     return;
-  } else {
-    // create order record
-    try {
-      const orderPlaced = await Order.create({
-        sender: {
-          name: sender.name,
-          phone: sender.phone,
-          email: sender.email,
-        },
-        recipient: {
-          name: recipient.name,
-          phone: recipient.phone,
-          email: recipient.email,
-        },
-        status: "awaiting payment",
-        products: products,
-        payment: {
-          msisdn: payment.msisdn,
-          mno: payment.mno,
-        },
-        delivery: {
-          cost: delivery.cost,
-          location: delivery.location,
-        },
-        total_price: total_price,
-        created_at: new Date(),
-      });
+  }
 
-      //make call to debit
-      const debit = await axios.post(endpoint, data, config);
-      console.log(debit.data)
-      if (debit.data.code !== 411) {
-        // send bad request response when request is bad
-        res.status(StatusCodes.BAD_REQUEST).json({
-          message: "Error, occured during payment, kindly try again",
-        });
-        // delete order because payment failed
-        await deleteOrder({ orderPlaced });
-        return;
-      } else {
-        res.status(StatusCodes.OK).json({
-          message: "Payment Initiated, kinldy follow prompts to make payment",
-        });
-        sendEmail(sender,{body:"Go and make payment!!!!!"})
-        return
-      }
-    } catch (e) {
-      // catch possible errors when writing to the db and send res
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        message: "An error occured, whiles writing to the db",
+  const data = {
+    customerName: sender.name,
+    mno: payment.mno,
+    amount: "0.01",
+    msisdn: payment.msisdn,
+    description: "SmoochiesBakes Debit",
+    reference: randSring(),
+    callback_url: "",
+  };
+
+  // create order record
+  try {
+    const orderPlaced = await Order.create({
+      sender: {
+        name: sender.name,
+        phone: sender.phone,
+        email: sender.email,
+      },
+      recipient: {
+        name: recipient.name,
+        phone: recipient.phone,
+        email: recipient.email,
+      },
+      status: "awaiting payment",
+      products: products,
+      payment: {
+        msisdn: payment.msisdn,
+        mno: payment.mno,
+      },
+      delivery: {
+        cost: delivery.cost,
+        location: delivery.location,
+      },
+      total_price: total_price,
+      created_at: new Date(),
+    });
+
+    //make call to debit
+    const debit = await axios.post(endpoint, data, config);
+    if (debit.data.code !== 411) {
+      // send bad request response when request is bad
+      res.status(StatusCodes.BAD_REQUEST).json({
+        message: "Error, occured during payment, kindly try again",
       });
+      // delete order because payment failed
+      await deleteOrder({ orderPlaced });
+      return;
+    } else {
+      res.status(StatusCodes.OK).json({
+        message: "Payment Initiated, kinldy follow prompts to make payment",
+      });
+      sendEmail(sender, { body: "Go and make payment!!!!!" });
       return;
     }
+  } catch (e) {
+    // catch possible errors when writing to the db and send res
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: "An error occured, whiles writing to the db",
+      e
+    });
+    return;
   }
 };
 
 const confirmOrderPayment = async (req, res) => {
   const order_id = req.params.order_id;
 
-  const order = await Order.findOne({_id: order_id}).catch((e)=>{
+  const order = await Order.findOne({ _id: order_id }).catch((e) => {
     // send an email notification to Smoochies with order_id
-    sendEmail({email:'kk.opoku@outlook.com'},{
-      body: `An error occured, whiles reading from the db. Please update the STATUS of order:'${order_id}' to payment sucess in your system. Error: ${e.message}`,
-    })
-    return
-  })
+    sendEmail(
+      { email: "kk.opoku@outlook.com" },
+      {
+        body: `An error occured, whiles reading from the db. Please update the STATUS of order:'${order_id}' to payment sucess in your system. Error: ${e.message}`,
+      }
+    );
+    return;
+  });
 
-  await order.save().catch((e)=>{
+  await order.save().catch((e) => {
     // send an email notification to Smoochies with order_id
-    sendEmail({email:'kk.opoku@outlook.com'},{
-      body: `An error occured, whiles writing to the db. Please update the STATUS of order:'${order_id}' to payment sucess in your system. Error: ${e.message}`,
-    })
-    return
-  })
+    sendEmail(
+      { email: "kk.opoku@outlook.com" },
+      {
+        body: `An error occured, whiles writing to the db. Please update the STATUS of order:'${order_id}' to payment sucess in your system. Error: ${e.message}`,
+      }
+    );
+    return;
+  });
 
   res.status(StatusCodes.OK);
-}
+};
 
-
-const updateOrderStatus = async (req,res) => {
-  const {order_id, status} = req.body
-  await Order.updateOne({_id: order_id},{status: status}).catch((e)=>{
+const updateOrderStatus = async (req, res) => {
+  const { order_id, status } = req.body;
+  await Order.updateOne({ _id: order_id }, { status: status }).catch((e) => {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      message: "An error occured, whiles updating order status. Please try again",
-    })
-    return
-  })
-  res.status(StatusCodes.OK).json({message: "Order status updated successfully"})
-  return
-}
+      message:
+        "An error occured, whiles updating order status. Please try again",
+    });
+    return;
+  });
+  res
+    .status(StatusCodes.OK)
+    .json({ message: "Order status updated successfully" });
+  return;
+};
 
-
-module.exports = { makeOrder, confirmOrderPayment, updateOrderStatus }
+module.exports = { makeOrder, confirmOrderPayment, updateOrderStatus };
