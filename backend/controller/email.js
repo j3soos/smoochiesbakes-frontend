@@ -8,7 +8,7 @@ async function sendEmail (recipient, message){
     service: "hotmail",
     auth: {
       user: process.env.EMAIL,
-      pass: process.env.EMAIL_PSWD,
+      pass: process.env.EMAIL_PSWD.replaceAll("\\$", "$"),
     },
   });
 
