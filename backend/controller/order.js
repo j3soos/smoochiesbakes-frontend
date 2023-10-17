@@ -21,7 +21,7 @@ async function deleteOrder({ order }) {
 
 // createOrder
 const makeOrder = async (req, res) => {
-  const { payment, receipient, sender, products, delivery, total_price } =
+  const { payment, recipient, sender, products, delivery, total_price } =
     req.body;
   const endpoint =
     "https://test.digitaltermination.com/api/instntmny-local/transactions/wallets/debit-wallet";
@@ -47,8 +47,8 @@ const makeOrder = async (req, res) => {
   if (
     !sender.name ||
     !sender.phone ||
-    !receipient.name ||
-    !receipient.phone ||
+    !recipient.name ||
+    !recipient.phone ||
     !products ||
     !payment.msisdn ||
     !payment.mno ||
@@ -69,10 +69,10 @@ const makeOrder = async (req, res) => {
           phone: sender.phone,
           email: sender.email,
         },
-        receipient: {
-          name: receipient.name,
-          phone: receipient.phone,
-          email: receipient.email,
+        recipient: {
+          name: recipient.name,
+          phone: recipient.phone,
+          email: recipient.email,
         },
         status: "awaiting payment",
         products: products,
@@ -138,4 +138,18 @@ const confirmOrderPayment = async (req, res) => {
   res.status(StatusCodes.OK);
 }
 
-module.exports = { makeOrder, confirmOrderPayment }
+
+const updateOrderStatus = async (req,res) => {
+  const {order_id, status} = req.body
+  await Order.updateOne({_id: order_id},{status: status}).catch((e)=>{
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: "An error occured, whiles updating order status. Please try again",
+    })
+    return
+  })
+  res.status(StatusCodes.OK).json({message: "Order status updated successfully"})
+  return
+}
+
+
+module.exports = { makeOrder, confirmOrderPayment, updateOrderStatus }
