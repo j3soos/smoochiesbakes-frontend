@@ -3,8 +3,8 @@ const express = require("express");
 const app = express();
 const connectDB = require("./database/connect");
 const port = process.env.BACKEND_PORT || 3001;
-// const timeout = require('connect-timeout');
 const errorHandlerMiddleware = require('./middleware/error_handler')
+const cron = require('node-cron')
 const productRouter = require("./routes/product");
 const orderRouter = require("./routes/order");
 
@@ -39,6 +39,7 @@ app.get("/", (req, res) => {
 app.use(errorHandlerMiddleware)
 
 async function run() {
+  // cron.schedule('*/5 * * * *', ()=>{console.log("Running")})
   try {
     await connectDB(process.env.MONGOOSE_URI || 3001);
     app.listen(port, () => {
