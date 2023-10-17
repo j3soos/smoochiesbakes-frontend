@@ -2,6 +2,8 @@ const { StatusCodes } = require("http-status-codes");
 const Order = require("../models/order");
 const axios = require("axios");
 const crypto = require('crypto')
+const {sendEmail} = require('../controller/email')
+
 
 // generate random string
 function randSring() {
@@ -16,6 +18,8 @@ async function deleteOrder({ order }) {
   });
 }
 
+
+// createOrder
 const makeOrder = async (req, res) => {
   const { payment, receipient, sender, products, delivery, total_price } =
     req.body;
@@ -33,7 +37,7 @@ const makeOrder = async (req, res) => {
   const data = {
     customerName: sender.name,
     mno: payment.mno,
-    amount: "0.1",
+    amount: "0.01",
     msisdn: payment.msisdn,
     description: "SmoochiesBakes Debit",
     reference: randSring(),
@@ -99,6 +103,7 @@ const makeOrder = async (req, res) => {
         res.status(StatusCodes.OK).json({
           message: "Payment Initiated, kinldy follow prompts to make payment",
         });
+        sendEmail(sender,{body:"Go and make payment!!!!!"})
         return
       }
     } catch (e) {

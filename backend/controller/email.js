@@ -15,7 +15,7 @@ async function sendEmail (recipient, message){
   const mailOptions = {
     from: process.env.EMAIL,
     to: recipient.email,
-    subject: message.subject,
+    subject: "SMOOCHIES BAKES",
     text: message.body
   };
 
