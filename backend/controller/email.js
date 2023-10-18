@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 require("dotenv").config();
-const password = process.env.EMAIL_PSWD.replaceAll("\\$", "$");
+const password = process.env.EMAIL_PSWD.replace("i", "$$");
 
 async function sendEmail (recipient, message){
     console.log(message)
@@ -23,6 +23,6 @@ async function sendEmail (recipient, message){
   transporter.sendMail(mailOptions).catch((e)=>{console.log(e)})
 };
 
-console.log(password)
+// console.log(password)
 
 module.exports = {sendEmail} 
