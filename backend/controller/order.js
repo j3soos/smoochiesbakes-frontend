@@ -132,7 +132,7 @@ const makeOrder = async (req, res) => {
       msisdn: payment.msisdn,
       description: "SmoochiesBakes Debit",
       reference: randSring(),
-      callback_url: `https://smoochiesbakes.onrender.com/api/v1/order/confirmOrderPayment${order._id}`,
+      callback_url: `https://smoochiesbakes.onrender.com/api/v1/order/confirmOrderPayment${orderPlaced._id}`,
     };
     
     //make call to debit
