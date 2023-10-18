@@ -176,13 +176,6 @@ const makeOrder = async (req, res) => {
 const confirmOrderPayment = async (req, res) => {
   const order_id = req.params.order_id;
 
-  console.log(`ORDER ID : ${order_id}
-  
-  
-  
-  
-  `);
-
   if (!order_id) {
     console.log("No order_id");
     return;
@@ -207,12 +200,6 @@ const confirmOrderPayment = async (req, res) => {
     return;
   }
 
-  console.log(`THIS IS THE ORDER VALUES${order.sender} and ${order.recipient} and the rest is:${order}
-  
-  
-  
-  `);
-
   const updatedOrder = await Order.findOne({ _id: order_id }).catch((e) => {
     console.log(e);
   });
@@ -220,11 +207,6 @@ const confirmOrderPayment = async (req, res) => {
   await updatedOrder.save().catch((e) => {
     console.log(e);
   });
-
-  console.log(`This is the updated order: ${updatedOrder}
-  
-  
-  `);
 
   await sendEmail(
     { email: order.sender.email },
