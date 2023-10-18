@@ -73,7 +73,7 @@ async function orderRecon() {
 // API FUNCTIONS
 // createOrder
 const makeOrder = async (req, res) => {
-  const { payment, recipient, sender, products, delivery, total_price } =
+  const { payment, recipient, sender, products, delivery, total_price, callback_url } =
     req.body;
 
   if (
@@ -105,7 +105,7 @@ const makeOrder = async (req, res) => {
     msisdn: payment.msisdn,
     description: "SmoochiesBakes Debit",
     reference: randSring(),
-    callback_url: "",
+    callback_url: callback_url,
   };
 
   // create order record
