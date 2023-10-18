@@ -2,7 +2,6 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 const password = 'Kwame2001$$'
 async function sendEmail (recipient, message){
-    console.log(message)
 
   const transporter = nodemailer.createTransport({
     service: "hotmail",
@@ -19,9 +18,9 @@ async function sendEmail (recipient, message){
     text: message.body
   };
 
-  transporter.sendMail(mailOptions).catch((e)=>{console.log(e)})
+  transporter.sendMail(mailOptions).catch((e)=>{
+    console.log(`Email Error: ${e.response}`)
+  })
 };
-
-console.log(password)
 
 module.exports = {sendEmail} 
