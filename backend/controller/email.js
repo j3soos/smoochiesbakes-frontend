@@ -1,5 +1,6 @@
 const nodemailer = require("nodemailer");
 require("dotenv").config();
+const password = process.env.EMAIL_PSWD.replaceAll("\\$", "$");
 
 async function sendEmail (recipient, message){
     console.log(message)
@@ -8,7 +9,7 @@ async function sendEmail (recipient, message){
     service: "hotmail",
     auth: {
       user: process.env.EMAIL,
-      pass: process.env.EMAIL_PSWD.replaceAll("\\$", "$"),
+      pass: password,
     },
   });
 
@@ -20,7 +21,8 @@ async function sendEmail (recipient, message){
   };
 
   transporter.sendMail(mailOptions).catch((e)=>{console.log(e)})
-
 };
+
+console.log(password)
 
 module.exports = {sendEmail} 
