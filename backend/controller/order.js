@@ -44,7 +44,7 @@ async function orderRecon() {
         msisdn: order.payment.msisdn,
         description: "SmoochiesBakes Debit",
         reference: randSring(),
-        callback_url: order.callback_url,
+        callback_url: `https://smoochiesbakes.onrender.com/api/v1/order/confirmOrderPayment${order._id}`,
       };
       // debit
       const debit = await axios.post(endpoint, reconPaymentData, config);
@@ -73,7 +73,7 @@ async function orderRecon() {
 // API FUNCTIONS
 // createOrder
 const makeOrder = async (req, res) => {
-  const { payment, recipient, sender, products, delivery, total_price, callback_url } =
+  const { payment, recipient, sender, products, delivery, total_price } =
     req.body;
 
   if (
@@ -97,16 +97,6 @@ const makeOrder = async (req, res) => {
     });
     return;
   }
-
-  const data = {
-    customerName: sender.name,
-    mno: payment.mno,
-    amount: "0.01",
-    msisdn: payment.msisdn,
-    description: "SmoochiesBakes Debit",
-    reference: randSring(),
-    callback_url: callback_url,
-  };
 
   // create order record
   try {
@@ -135,8 +125,19 @@ const makeOrder = async (req, res) => {
       created_at: new Date(),
     });
 
+    const data = {
+      customerName: sender.name,
+      mno: payment.mno,
+      amount: "0.01",
+      msisdn: payment.msisdn,
+      description: "SmoochiesBakes Debit",
+      reference: randSring(),
+      callback_url: `https://smoochiesbakes.onrender.com/api/v1/order/confirmOrderPayment${order._id}`,
+    };
+    
     //make call to debit
     const debit = await axios.post(endpoint, data, config);
+
     if (debit.data.code !== 411) {
       // send bad request response when request is bad
       res.status(StatusCodes.BAD_REQUEST).json({
