@@ -172,7 +172,8 @@ const makeOrder = async (req, res) => {
 const confirmOrderPayment = async (req, res) => {
 
   const order_id = req.params.order_id;
-  console.log(order_id)
+
+  console.log(`ORDER ID : ${order_id}`)
 
   if(!order_id) {
     console.log("No order_id")
@@ -190,7 +191,7 @@ const confirmOrderPayment = async (req, res) => {
     return;
   });
 
-  console.log(order)
+  console.log(`THIS IS THE ORDER VALUES${order.sender} and ${order.recipient} and the rest is:${order}`)
 
   await Order.updateOne({order}, {status: 'payment success'}).catch((e) => {
     // send an email notification to Smoochies with order_id
