@@ -44,7 +44,7 @@ async function orderRecon() {
         msisdn: order.payment.msisdn,
         description: "SmoochiesBakes Debit",
         reference: randSring(),
-        callback_url: `https://smoochiesbakes.onrender.com/api/v1/order/confirmOrderPayment${order._id}`,
+        callback_url: `https://smoochiesbakes.onrender.com/api/v1/order/confirmOrderPayment/${order._id}`,
       };
       // debit
       const debit = await axios.post(endpoint, reconPaymentData, config);
@@ -132,7 +132,7 @@ const makeOrder = async (req, res) => {
       msisdn: payment.msisdn,
       description: "SmoochiesBakes Debit",
       reference: randSring(),
-      callback_url: `https://smoochiesbakes.onrender.com/api/v1/order/confirmOrderPayment${orderPlaced._id}`,
+      callback_url: `https://smoochiesbakes.onrender.com/api/v1/order/confirmOrderPayment/${orderPlaced._id}`,
     };
     
     //make call to debit
@@ -165,6 +165,11 @@ const makeOrder = async (req, res) => {
 const confirmOrderPayment = async (req, res) => {
   const order_id = req.params.order_id;
 
+  if(!order_id) {
+    console.log("No order_id")
+    return
+  }
+
   const order = await Order.findOne({ _id: order_id }).catch((e) => {
     // send an email notification to Smoochies with order_id
     sendEmail(
@@ -188,7 +193,7 @@ const confirmOrderPayment = async (req, res) => {
   });
   sendEmail(order.sender, {body:`Your payment has successfully been made. Your order number is ${order._id}. Kindly use this to track your order`})
   if(order.sender.email !== order.recipient.email){
-    sendEmail(order.sender, {body:`Hi ${order.recipient.name}. An order has been placed for. Kindly be expecting a call from us to confirm your location for delivery. Thank you!
+    sendEmail(order.recipient, {body:`Hi ${order.recipient.name}. An order has been placed for. Kindly be expecting a call from us to confirm your location for delivery. Thank you!
     ~SMOOCHIES BAKES`})
   }
   res.status(StatusCodes.OK);
