@@ -136,7 +136,14 @@ const makeOrder = async (req, res) => {
     };
     
     //make call to debit
-    const debit = await axios.post(endpoint, data, config);
+    const debit = await axios.post(endpoint, data, config).catch(async(e)=>{
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        message: "Debit Failed, Kindly try again",
+        error: e
+      })
+      await deleteOrder(orderPlaced)
+      return
+    })
 
     if (debit.data.code !== 411) {
       // send bad request response when request is bad
@@ -144,7 +151,7 @@ const makeOrder = async (req, res) => {
         message: "Error, occured during payment, kindly try again",
       });
       // delete order because payment failed
-      await deleteOrder({ orderPlaced });
+      await deleteOrder(orderPlaced);
       return;
     } else {
       res.status(StatusCodes.OK).json({
@@ -163,6 +170,7 @@ const makeOrder = async (req, res) => {
 };
 
 const confirmOrderPayment = async (req, res) => {
+
   const order_id = req.params.order_id;
 
   if(!order_id) {
