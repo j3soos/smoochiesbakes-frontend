@@ -1,7 +1,6 @@
 const nodemailer = require("nodemailer");
 require("dotenv").config();
-const password = process.env.EMAIL_PSWD.replace("ii", "$$$");
-
+const password = 'Kwame2001$$'
 async function sendEmail (recipient, message){
     console.log(message)
 
