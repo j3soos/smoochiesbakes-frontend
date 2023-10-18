@@ -187,6 +187,10 @@ const confirmOrderPayment = async (req, res) => {
     return;
   });
   sendEmail(order.sender, {body:`Your payment has successfully been made. Your order number is ${order._id}. Kindly use this to track your order`})
+  if(order.sender.email !== order.recipient.email){
+    sendEmail(order.sender, {body:`Hi ${order.recipient.name}. An order has been placed for. Kindly be expecting a call from us to confirm your location for delivery. Thank you!
+    ~SMOOCHIES BAKES`})
+  }
   res.status(StatusCodes.OK);
 };
 
