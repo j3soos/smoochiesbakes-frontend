@@ -152,6 +152,7 @@ const makeOrder = async (req, res) => {
       // send bad request response when request is bad
       res.status(StatusCodes.BAD_REQUEST).json({
         message: "Error, occured during payment, kindly try again",
+        error: debit.data,
       });
       // delete order because payment failed
       await deleteOrder(orderPlaced);
@@ -240,14 +241,8 @@ const confirmOrderPayment = async (req, res) => {
     ~SMOOCHIES BAKES`,
       }
     );
-  }else{
-    res.status(StatusCodes.OK).json({message: "Success"});
-    return;
   }
-  console.log(`
   
-  
-  It got here!`)
   res.status(StatusCodes.OK).json({message: "Success"});
   return;
 };
