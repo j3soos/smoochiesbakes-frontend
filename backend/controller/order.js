@@ -172,6 +172,7 @@ const makeOrder = async (req, res) => {
 const confirmOrderPayment = async (req, res) => {
 
   const order_id = req.params.order_id;
+  console.log(order_id)
 
   if(!order_id) {
     console.log("No order_id")
@@ -189,7 +190,18 @@ const confirmOrderPayment = async (req, res) => {
     return;
   });
 
-  await order.save().catch((e) => {
+  // await order?.save().catch((e) => {
+    // send an email notification to Smoochies with order_id
+    // sendEmail(
+  //     { email: "kk.opoku@outlook.com" },
+  //     {
+  //       body: `An error occured, whiles writing to the db. Please update the STATUS of order:'${order_id}' to payment sucess in your system. Error: ${e.message}`,
+  //     }
+  //   );
+  //   return;
+  // });
+
+  await Order.updateOne({order}, {status: 'payment success'}).catch((e) => {
     // send an email notification to Smoochies with order_id
     sendEmail(
       { email: "kk.opoku@outlook.com" },
@@ -199,6 +211,8 @@ const confirmOrderPayment = async (req, res) => {
     );
     return;
   });
+
+  
   sendEmail(order.sender, {body:`Your payment has successfully been made. Your order number is ${order._id}. Kindly use this to track your order`})
   if(order.sender.email !== order.recipient.email){
     sendEmail(order.recipient, {body:`Hi ${order.recipient.name}. An order has been placed for. Kindly be expecting a call from us to confirm your location for delivery. Thank you!
