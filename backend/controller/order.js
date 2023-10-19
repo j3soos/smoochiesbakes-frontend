@@ -230,18 +230,32 @@ const confirmOrderPayment = async (req, res) => {
 };
 
 const updateOrderStatus = async (req, res) => {
+
   const { order_id, status } = req.body;
-  await Order.updateOne({ _id: order_id }, { status: status }).catch((e) => {
+
+  const order = await Order.findOne({_id: order_id}).catch((e)=>{
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      message:
-        "An error occured, whiles updating order status. Please try again",
+      message: "An error occured, whiles reading from the db",
+      error: e,
+    });
+    return
+  })
+
+  order.status = status
+
+  await order.save().catch((e)=>{
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: "An error whiles updating the order",
+      error: e,
     });
     return;
-  });
+  })
+
   res
     .status(StatusCodes.OK)
     .json({ message: "Order status updated successfully" });
   return;
+
 };
 
 module.exports = { makeOrder, confirmOrderPayment, updateOrderStatus };
