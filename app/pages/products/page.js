@@ -96,64 +96,87 @@ export default function OrderPage() {
   };
 
   return (
-    <main className=" bg-white h-full min-h-screen font-serif">
-      
-      <Header />
+    <main className=" bg-[#ffe6ee] h-full min-h-screen text-gray-700 font-sans">
+      {/* <Header /> */}
 
-      <div className="flex flex-row bg-[#FBA1B7] justify-center text-center py-1 text-white font-light font-sans">
-        {`Welcome to Smoochies Bakes. This our easy order/grab and go portal. For
+      <div className="flex flex-col justify-center text-center gap-3 py-10">
+        <div className="text-4xl font-bold font-sans">{`SMOOCHIES BAKES`}</div>
+        <div className="font-light font-sans">
+          {`Welcome to Smoochies Bakes. This our easy order/grab and go portal. For
         customized orders, kindly WhatsApp 0554181995/0247069070.`}
-      </div>
-
-      {/* select products (full cakes) */}
-      <div className="flex flex-col bg-[url('/patterns/pattern02.jpg')] content-center justify-center text-center w-screen bg-contain h-fit gap-10 py-12">
-        <div className="text-3xl">Full Cakes</div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 lg:gap-5 lg:px-8 font-thin">
-          {products.fullcakes.map((item, name) => (
-            <div
-              key={name}
-              className="flex flex-col gap-3 justify-self-center text-center"
-            >
-              <div className="bg-[url('/order_page/pastries.jpg')] bg-cover bg-no-repeat rounded-lg w-52 h-48 transition-all hover:scale-105"></div>
-              <div className="">{item.name}</div>
-            </div>
-          ))}
         </div>
       </div>
 
-      {/* select products (banana cakes)*/}
-      <div className="bg-[#FBA1B7] flex flex-col content-center justify-center text-center w-screen bg-contain h-fit gap-10 py-16">
-        <div className="text-3xl">Banana Cakes</div>
-        <div className="grid grid-cols-2 lg:gap-5 lg:px-8 font-thin">
-          {products.bananacakes.map((item, name) => (
-            <div
-              key={name}
-              className="flex flex-col gap-3 content-center items-center align-middle justify-self-center text-center"
-            >
+      {/* select products*/}
+      <div className="flex flex-col content-center w-screen h-fit gap-10 py-12">
+
+        <div className="flex flex-row justify-center text-2xl font-semibold">
+          SELECT PRODUCTS
+        </div>
+
+        <div className="flex flex-col items-center p-5">
+          <div className="flex flex-row justify-center text-xl font-semibold pb-3">
+            FULL CAKE LIST
+          </div>
+          <div className="bg-white rounded-xl grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-5 lg:px-8 font-normal px-5 pb-5 pt-7 w-fit transition-all duration-700">
+            {products.fullcakes.map((item, name) => (
               <div
-                className={`bg-[url('/order_page/pastries.jpg')] bg-cover bg-no-repeat rounded-lg w-72 h-60 transition-all hover:scale-105`}
-              ></div>
-              <div className="">{item.name}</div>
-            </div>
-          ))}
+                key={name}
+                className="flex flex-col gap-3 justify-self-center text-center"
+              >
+                <div className="bg-[url('/order_page/pastries.jpg')] bg-cover bg-no-repeat rounded-lg w-52 h-48 transition-all hover:scale-105"></div>
+                <div className="flex flex-col">
+                  <div>{item.name}</div>
+                  <div>Ghs {item.price}</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
+
+        <div className="flex flex-col items-center p-5">
+          <div className="flex flex-row justify-center text-xl font-semibold pb-3">
+            CUPCAKES LIST
+          </div>
+          <div className="bg-white rounded-xl grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-5 lg:px-8 font-normal px-5 pb-5 pt-7 w-fit transition-all duration-700">
+            {products.cupcakes.map((item, name) => (
+              <div
+                key={name}
+                className="flex flex-col gap-3 justify-self-center text-center"
+              >
+                <div className="bg-[url('/order_page/pastries.jpg')] bg-cover bg-no-repeat rounded-lg w-52 h-48 transition-all hover:scale-105"></div>
+                <div className="flex flex-col">
+                  <div>{item.name}</div>
+                  <div>Ghs {item.price}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex flex-col items-center p-5">
+          <div className="flex flex-row justify-center text-xl font-semibold pb-3">
+            BANANA CAKES LIST
+          </div>
+          <div className="bg-white rounded-xl grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-2 gap-5 lg:px-8 font-normal px-5 pb-5 pt-7 w-fit transition-all duration-700">
+            {products.bananacakes.map((item, name) => (
+              <div
+                key={name}
+                className="flex flex-col gap-3 justify-self-center text-center"
+              >
+                <div className="bg-[url('/order_page/pastries.jpg')] bg-cover bg-no-repeat rounded-lg w-52 h-48 transition-all hover:scale-105"></div>
+                <div className="flex flex-col">
+                  <div>{item.name}</div>
+                  <div>Ghs {item.price}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
 
-      {/* select products (cupcakes)*/}
-      <div className="flex flex-col content-center justify-center text-center w-screen bg-contain h-fit gap-10 py-16">
-        <div className="text-3xl">Cupcakes</div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:gap-5 lg:px-8 font-thin">
-          {products.cupcakes.map((item, name) => (
-            <div
-              key={name}
-              className="flex flex-col gap-3 content-center items-center align-middle justify-self-center text-center"
-            >
-              <div className="bg-[url('/order_page/pastries.jpg')] bg-cover bg-no-repeat rounded-lg w-52 h-48 transition-all hover:scale-105"></div>
-              <div className="">{item.name}</div>
-            </div>
-          ))}
-        </div>
-      </div>
+      
 
       <div className="bg-[url(/patterns/pattern02.jpg)] bg-contain text-center content-center justify-center items-center align-middle text-white h-80">
         FOOTER HERE WAI
