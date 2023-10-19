@@ -1,7 +1,9 @@
 import React from "react";
 import Header from "../../components/header";
+import LocationPicker from "@/app/components/locationPicker";
 
 export default function OrderPage() {
+
   const products = [
     {
       name: "",
@@ -59,8 +61,11 @@ export default function OrderPage() {
         <div className="flex-row text-5xl text-center">
             SELECT PRODUCTS TO ADD TO CART
         </div>
-
+        <LocationPicker />
       </div>
+
+
+
     </main>
   );
 }
