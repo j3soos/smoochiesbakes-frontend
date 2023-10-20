@@ -4,6 +4,7 @@ const axios = require("axios");
 const crypto = require("crypto");
 const { sendEmail } = require("../controller/email");
 const { STATUS_CODES } = require("http");
+const { faCommentsDollar } = require("@fortawesome/free-solid-svg-icons");
 const endpoint = process.env.ZEEPAY_ENDPOINT;
 const token = process.env.ZEEPAY_TOKEN;
 const config = {
@@ -193,7 +194,9 @@ const confirmOrderPayment = async (req, res) => {
     return;
   });
 
-  if (order.status === "payment success"){
+  console.log(order.status)
+
+  if (order?.status === "payment success"){
     // create report record for order
     res.status(StatusCodes.OK).json({
       message: "Already Paid",
