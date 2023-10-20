@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 
 function LocationPicker() {
+
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   useEffect(() => {
@@ -38,7 +39,11 @@ function LocationPicker() {
         id="location-input"
         type="text"
         placeholder="Search for a location"
-        className="p-2 border border-gray-300 w-fit rounded"
+        className="p-2 border border-gray-400 w-full rounded"
+        value={selectedLocation}
+        onChange={(event) => {
+          setSelectedLocation(event.target.value)
+        }}
       />
       {selectedLocation && (
         <div className="mt-4">
