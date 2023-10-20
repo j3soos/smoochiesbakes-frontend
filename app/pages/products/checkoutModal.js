@@ -126,7 +126,7 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
     };
 
     // make request to the server to make request
-    await fetch(`http://localhost:3001/api/v1/order/makeOrder`, {
+    const res = await fetch(`http://localhost:3001/api/v1/order/makeOrder`, {
       method: "POST",
       headers: {
         "Access-Control-Allow-Origin": "*",
@@ -136,6 +136,7 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
     }).catch((e) => {
       console.error(e);
     });
+    console.log(res)
 
     setInfoMessage(
       "Payment Initiated, kindly follow prompt to make payment to confirm order"

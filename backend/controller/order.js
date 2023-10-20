@@ -189,6 +189,7 @@ const confirmOrderPayment = async (req, res) => {
         body: `An error occured, whiles reading from the db. Please update the STATUS of order:'${order_id}' to payment sucess in your system. Error: ${e.message}`,
       }
     );
+    console.log(e)
     return;
   });
 
