@@ -193,7 +193,7 @@ const confirmOrderPayment = async (req, res) => {
     return;
   });
 
-  if (order.status === "payment sucess"){
+  if (order.status === "payment success"){
     // create report record for order
     res.status(StatusCodes.OK).json({
       message: "Already Paid",
