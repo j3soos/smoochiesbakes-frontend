@@ -19,6 +19,22 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
   const [error, setError] = useState(null);
   const [infoMessage, setInfoMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [distance, setDistance] = useState(0);
+  const [CalcDistance, setCalcDistance] = useState(false)
+
+  async function calcDistance (){
+    const res = await fetch(
+      `https://maps.googleapis.com/maps/api/distancematrix/json?origins=5.6569667%2C-0.0261422&destinations=${selectedLocation.longitude}%2C${selectedLocation.latitude}&units=imperial&key=AIzaSyB_SurU3rhRE5JQo9CugvX3OdD5TVLGU7Y`,
+      {
+        method: "GET",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    setDistance(res.rows[0].elements[0].distance.value);
+  }
 
   function LocationPicker() {
     useEffect(() => {
@@ -34,7 +50,7 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
         const autocomplete = new google.maps.places.Autocomplete(input);
 
         // Listen for place changes
-        autocomplete.addListener("place_changed", () => {
+        autocomplete.addListener("place_changed", async () => {
           const place = autocomplete.getPlace();
           if (place.geometry) {
             setSelectedLocation({
@@ -42,6 +58,7 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
               latitude: place.geometry.location.lat(),
               longitude: place.geometry.location.lng(),
             });
+
             setConfirmedLocation(true);
           }
         });
@@ -75,6 +92,7 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
             <p>Selected Location: {selectedLocation.name}</p>
             <p>Latitude: {selectedLocation.latitude}</p>
             <p>Longitude: {selectedLocation.longitude}</p>
+            {calcDistance && <p>Delivey Price: {distance / 440}</p>}
           </div>
         )}
       </div>
@@ -136,7 +154,7 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
     }).catch((e) => {
       console.error(e);
     });
-    console.log(res)
+    console.log(res);
 
     setInfoMessage(
       "Payment Initiated, kindly follow prompt to make payment to confirm order"
@@ -396,8 +414,8 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
                 disabled={loading}
                 onClick={() => {
                   setTabCount(tabCount + 1);
-                  setError(null)
-                  setInfoMessage(null)
+                  setError(null);
+                  setInfoMessage(null);
                 }}
                 className="bg-pink-400 hover:bg-pink-700 text-white font-bold rounded-lg px-4 p-1"
               >
@@ -426,8 +444,8 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
                 disabled={loading}
                 onClick={() => {
                   setTabCount(tabCount - 1);
-                  setError(null)
-                  setInfoMessage(null)
+                  setError(null);
+                  setInfoMessage(null);
                 }}
                 className="bg-pink-400 hover:bg-pink-700 text-white font-bold rounded-lg px-2 p-1"
               >

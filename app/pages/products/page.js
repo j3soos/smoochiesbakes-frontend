@@ -8,7 +8,7 @@ export default function OrderPage() {
   const [viewCheckoutModal, setViewCheckoutModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [cartItems, setCartItems] = useState([]);
-  const [destination, setDestination] = useState({})
+  const [destination, setDestination] = useState({});
 
   const products = {
     fullcakes: [
@@ -19,7 +19,8 @@ export default function OrderPage() {
         price: 200,
         __v: 0,
         description:
-          "A compact yet delightful choice, perfect for intimate gatherings. Priced at $200, it's a charming treat for any occasion.",
+          "A compact yet delightful choice, perfect for intimate gatherings. Priced at GHC200, it's a charming treat for any occasion.",
+        bg_url: "/order_page/pastries.jpg",
       },
       {
         _id: "652c778b8b20a9e9c1de9db3",
@@ -28,7 +29,8 @@ export default function OrderPage() {
         price: 255,
         __v: 0,
         description:
-          "A slightly taller and more extravagant version of the 6-inch cake, priced at $255. Ideal for those who crave a bit more cake goodness.",
+          "A slightly taller and more extravagant version of the 6-inch cake, priced at GHC255. Ideal for those who crave a bit more cake goodness.",
+        bg_url: "https://images.pexels.com/photos/10510747/pexels-photo-10510747.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       },
       {
         _id: "652c77a28b20a9e9c1de9db5",
@@ -37,7 +39,8 @@ export default function OrderPage() {
         price: 255,
         __v: 0,
         description:
-          "A popular choice for medium-sized gatherings, priced at $255. It offers more servings while maintaining a manageable size.",
+          "A popular choice for medium-sized gatherings, priced at GHC255. It offers more servings while maintaining a manageable size.",
+        bg_url: "https://images.pexels.com/photos/1120970/pexels-photo-1120970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       },
       {
         _id: "652c77bd8b20a9e9c1de9db7",
@@ -46,7 +49,8 @@ export default function OrderPage() {
         price: 305,
         __v: 0,
         description:
-          "An elegant and grand option, perfect for celebrations that demand something extra special. Priced at $305, it's a showstopper.",
+          "An elegant and grand option, perfect for celebrations that demand something extra special. Priced at GHC305, it's a showstopper.",
+        bg_url: "https://images.pexels.com/photos/9009965/pexels-photo-9009965.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       },
       {
         _id: "652c77cb8b20a9e9c1de9db9",
@@ -55,7 +59,8 @@ export default function OrderPage() {
         price: 355,
         __v: 0,
         description:
-          "A cake that's perfect for larger gatherings and celebrations, priced at $355. It ensures that everyone gets a slice of the celebration.",
+          "A cake that's perfect for larger gatherings and celebrations, priced at GHC355. It ensures that everyone gets a slice of the celebration.",
+        bg_url: "https://images.pexels.com/photos/806363/pexels-photo-806363.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       },
       {
         _id: "652c77e48b20a9e9c1de9dbb",
@@ -64,7 +69,8 @@ export default function OrderPage() {
         price: 405,
         __v: 0,
         description:
-          "The biggest of the bunch, priced at $405, this cake is designed for grand occasions and serves a substantial number of guests.",
+          "The biggest of the bunch, priced at GHC405, this cake is designed for grand occasions and serves a substantial number of guests.",
+        bg_url: "url_to_image_6",
       },
       {
         _id: "652c78018b20a9e9c1de9dbd",
@@ -73,7 +79,8 @@ export default function OrderPage() {
         price: 325,
         __v: 0,
         description:
-          "For personalized celebrations, the Double Number Cake, priced at $325, lets you customize your cake with numbers or special shapes, making it a memorable centerpiece for any event.",
+          "For personalized celebrations, the Double Number Cake, priced at GHC325, lets you customize your cake with numbers or special shapes, making it a memorable centerpiece for any event.",
+        bg_url: "url_to_image_7",
       },
     ],
 
@@ -84,6 +91,7 @@ export default function OrderPage() {
         category: "Banana Cakes",
         price: 50,
         __v: 0,
+        bg_url: "url_to_image_8",
       },
       {
         _id: "652c78cf354349fb5629a7cf",
@@ -91,6 +99,7 @@ export default function OrderPage() {
         category: "Banana Cakes",
         price: 50,
         __v: 0,
+        bg_url: "url_to_image_9",
       },
     ],
     cupcakes: [
@@ -100,6 +109,7 @@ export default function OrderPage() {
         category: "Cupcakes",
         price: 3.5,
         __v: 0,
+        bg_url: "url_to_image_10",
       },
       {
         _id: "652c7a2f354349fb5629a7d3",
@@ -107,6 +117,7 @@ export default function OrderPage() {
         category: "Cupcakes",
         price: 3.5,
         __v: 0,
+        bg_url: "url_to_image_11",
       },
       {
         _id: "652c7a44354349fb5629a7d5",
@@ -114,6 +125,7 @@ export default function OrderPage() {
         category: "Cupcakes",
         price: 4.0,
         __v: 0,
+        bg_url: "url_to_image_12",
       },
     ],
   };
@@ -202,7 +214,14 @@ export default function OrderPage() {
                     console.log(item);
                   }}
                 >
-                  <div className="bg-[url('/order_page/pastries.jpg')] bg-cover bg-no-repeat rounded-lg w-52 h-48 transition-all hover:scale-105" />
+                  <div
+                    className="rounded-lg w-52 h-48 transition-all hover:scale-105"
+                    style={{
+                      backgroundImage: `url(${item.bg_url})`,
+                      backgroundSize: "cover",
+                      backgroundRepeat: "no-repeat",
+                    }}
+                  />
                   <div className="flex flex-col">
                     <div>{item.name}</div>
                     <div>Ghs {item.price}</div>
@@ -254,11 +273,21 @@ export default function OrderPage() {
         </div>
       </div>
 
-      <button className="fixed bottom-0 left-0 p-4" onClick={()=>{setViewCheckoutModal(true)}} disabled={(cartItems.length === 0)}>
-        {cartItems.length === 0 ? (<></>) : (<span className="relative flex h-3 w-3">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-3 w-3 bg-pink-500"></span>
-        </span>)}
+      <button
+        className="fixed bottom-0 left-0 p-4"
+        onClick={() => {
+          setViewCheckoutModal(true);
+        }}
+        disabled={cartItems.length === 0}
+      >
+        {cartItems.length === 0 ? (
+          <></>
+        ) : (
+          <span className="relative flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-pink-500"></span>
+          </span>
+        )}
         <div className="btn bg-white border border-gray-700 rounded-lg px-3 py-1 w-20">
           Cart
         </div>
