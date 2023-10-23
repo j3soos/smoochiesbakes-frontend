@@ -20,7 +20,8 @@ export default function OrderPage() {
         __v: 0,
         description:
           "A compact yet delightful choice, perfect for intimate gatherings. Priced at GHC200, it's a charming treat for any occasion.",
-        bg_url: "/order_page/pastries.jpg",
+        bg_url:
+          "https://images.pexels.com/photos/140831/pexels-photo-140831.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       },
       {
         _id: "652c778b8b20a9e9c1de9db3",
@@ -30,7 +31,8 @@ export default function OrderPage() {
         __v: 0,
         description:
           "A slightly taller and more extravagant version of the 6-inch cake, priced at GHC255. Ideal for those who crave a bit more cake goodness.",
-        bg_url: "https://images.pexels.com/photos/10510747/pexels-photo-10510747.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        bg_url:
+          "https://images.pexels.com/photos/10510747/pexels-photo-10510747.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       },
       {
         _id: "652c77a28b20a9e9c1de9db5",
@@ -40,7 +42,8 @@ export default function OrderPage() {
         __v: 0,
         description:
           "A popular choice for medium-sized gatherings, priced at GHC255. It offers more servings while maintaining a manageable size.",
-        bg_url: "https://images.pexels.com/photos/1120970/pexels-photo-1120970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        bg_url:
+          "https://images.pexels.com/photos/1120970/pexels-photo-1120970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       },
       {
         _id: "652c77bd8b20a9e9c1de9db7",
@@ -50,7 +53,7 @@ export default function OrderPage() {
         __v: 0,
         description:
           "An elegant and grand option, perfect for celebrations that demand something extra special. Priced at GHC305, it's a showstopper.",
-        bg_url: "https://images.pexels.com/photos/9009965/pexels-photo-9009965.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        bg_url: "/order_page/arsenalcake.jpeg",
       },
       {
         _id: "652c77cb8b20a9e9c1de9db9",
@@ -60,7 +63,8 @@ export default function OrderPage() {
         __v: 0,
         description:
           "A cake that's perfect for larger gatherings and celebrations, priced at GHC355. It ensures that everyone gets a slice of the celebration.",
-        bg_url: "https://images.pexels.com/photos/806363/pexels-photo-806363.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        bg_url:
+          "https://images.pexels.com/photos/806363/pexels-photo-806363.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       },
       {
         _id: "652c77e48b20a9e9c1de9dbb",
@@ -70,7 +74,8 @@ export default function OrderPage() {
         __v: 0,
         description:
           "The biggest of the bunch, priced at GHC405, this cake is designed for grand occasions and serves a substantial number of guests.",
-        bg_url: "url_to_image_6",
+        bg_url:
+          "https://images.pexels.com/photos/2067436/pexels-photo-2067436.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       },
       {
         _id: "652c78018b20a9e9c1de9dbd",
@@ -80,7 +85,17 @@ export default function OrderPage() {
         __v: 0,
         description:
           "For personalized celebrations, the Double Number Cake, priced at GHC325, lets you customize your cake with numbers or special shapes, making it a memorable centerpiece for any event.",
-        bg_url: "url_to_image_7",
+        bg_url: "/order_page/doublenumbercake.jpeg",
+      },
+      {
+        _id: "652c78018b60a9e9c1de9dbd",
+        name: "Single Number Cake",
+        category: "Full Cakes",
+        price: 275,
+        __v: 0,
+        description:
+          "For personalized celebrations, the Double Number Cake, priced at GHC275, lets you customize your cake with numbers or special shapes, making it a memorable centerpiece for any event.",
+        bg_url: "/order_page/singlenumbercake.jpeg",
       },
     ],
 
@@ -91,7 +106,7 @@ export default function OrderPage() {
         category: "Banana Cakes",
         price: 50,
         __v: 0,
-        bg_url: "url_to_image_8",
+        bg_url: "/order_page/bananacake.jpg",
       },
       {
         _id: "652c78cf354349fb5629a7cf",
@@ -99,7 +114,7 @@ export default function OrderPage() {
         category: "Banana Cakes",
         price: 50,
         __v: 0,
-        bg_url: "url_to_image_9",
+        bg_url: "https://images.pexels.com/photos/15925185/pexels-photo-15925185/free-photo-of-pieces-of-homemade-bread.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       },
     ],
     cupcakes: [
@@ -109,7 +124,7 @@ export default function OrderPage() {
         category: "Cupcakes",
         price: 3.5,
         __v: 0,
-        bg_url: "url_to_image_10",
+        bg_url: "/order_page/chocolatecupcakes.jpg",
       },
       {
         _id: "652c7a2f354349fb5629a7d3",
@@ -117,7 +132,15 @@ export default function OrderPage() {
         category: "Cupcakes",
         price: 3.5,
         __v: 0,
-        bg_url: "url_to_image_11",
+        bg_url: "/order_page/vanillacupcakes.jpg",
+      },
+      {
+        _id: "652d7a44354349fb5629a7d5",
+        name: "Red Velvet Cupcake",
+        category: "Cupcakes",
+        price: 4.0,
+        __v: 0,
+        bg_url: "https://images.pexels.com/photos/6375497/pexels-photo-6375497.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       },
       {
         _id: "652c7a44354349fb5629a7d5",
@@ -125,7 +148,7 @@ export default function OrderPage() {
         category: "Cupcakes",
         price: 4.0,
         __v: 0,
-        bg_url: "url_to_image_12",
+        bg_url: "https://images.pexels.com/photos/7474203/pexels-photo-7474203.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       },
     ],
   };
@@ -242,11 +265,26 @@ export default function OrderPage() {
                 key={name}
                 className="flex flex-col gap-3 justify-self-center text-center"
               >
-                <div className="bg-[url('/order_page/pastries.jpg')] bg-cover bg-no-repeat rounded-lg w-52 h-48 transition-all hover:scale-105"></div>
-                <div className="flex flex-col">
-                  <div>{item.name}</div>
-                  <div>Ghs {item.price}</div>
-                </div>
+                <button
+                  onClick={() => {
+                    setSelectedProduct(item);
+                    setViewProductModalOpen(true);
+                    console.log(item);
+                  }}
+                >
+                  <div
+                    className="rounded-lg w-52 h-48 transition-all hover:scale-105"
+                    style={{
+                      backgroundImage: `url(${item.bg_url})`,
+                      backgroundSize: "cover",
+                      backgroundRepeat: "no-repeat",
+                    }}
+                  />
+                  <div className="flex flex-col">
+                    <div>{item.name}</div>
+                    <div>Ghs {item.price}</div>
+                  </div>
+                </button>
               </div>
             ))}
           </div>
@@ -262,11 +300,26 @@ export default function OrderPage() {
                 key={name}
                 className="flex flex-col gap-3 justify-self-center text-center"
               >
-                <div className="bg-[url('/order_page/pastries.jpg')] bg-cover bg-no-repeat rounded-lg w-52 h-48 transition-all hover:scale-105"></div>
-                <div className="flex flex-col">
-                  <div>{item.name}</div>
-                  <div>Ghs {item.price}</div>
-                </div>
+                <button
+                  onClick={() => {
+                    setSelectedProduct(item);
+                    setViewProductModalOpen(true);
+                    console.log(item);
+                  }}
+                >
+                  <div
+                    className="rounded-lg w-52 h-48 transition-all hover:scale-105"
+                    style={{
+                      backgroundImage: `url(${item.bg_url})`,
+                      backgroundSize: "cover",
+                      backgroundRepeat: "no-repeat",
+                    }}
+                  />
+                  <div className="flex flex-col">
+                    <div>{item.name}</div>
+                    <div>Ghs {item.price}</div>
+                  </div>
+                </button>
               </div>
             ))}
           </div>
