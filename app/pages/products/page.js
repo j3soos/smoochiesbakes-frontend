@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import ViewProductModal from "./viewProductModal";
 import CheckoutModal from "./checkoutModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 export default function OrderPage() {
   const [viewProductModalOpen, setViewProductModalOpen] = useState(false);
@@ -327,7 +329,7 @@ export default function OrderPage() {
       </div>
 
       <button
-        className="fixed bottom-0 left-0 p-4"
+        className="fixed bottom-0 right-0 p-4"
         onClick={() => {
           setViewCheckoutModal(true);
         }}
@@ -341,8 +343,8 @@ export default function OrderPage() {
             <span className="relative inline-flex rounded-full h-3 w-3 bg-pink-500"></span>
           </span>
         )}
-        <div className="btn bg-white border border-gray-700 rounded-lg px-3 py-1 w-20">
-          Cart
+        <div className="btn bg-white border border-gray-700 rounded-lg px-3 py-2 w-20">
+          <FontAwesomeIcon icon={faShoppingCart} className="text-xl text-black hover:opacity-60"/>
         </div>
       </button>
 

@@ -1,8 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Modal from "@/app/components/modal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 
 const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
+  // const [cartItems, setCartItems] = useState([cartItems]);
+  const [checkoutItems, setCheckoutItems] = useState(cartItems);
   const [tabCount, setTabCount] = useState(0);
   const [senderName, setSenderName] = useState("");
   const [senderPhone, setSenderPhone] = useState("");
@@ -20,9 +24,9 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
   const [infoMessage, setInfoMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [distance, setDistance] = useState(0);
-  const [CalcDistance, setCalcDistance] = useState(false)
+  const [CalcDistance, setCalcDistance] = useState(false);
 
-  async function calcDistance (){
+  async function calcDistance() {
     const res = await fetch(
       `https://maps.googleapis.com/maps/api/distancematrix/json?origins=5.6569667%2C-0.0261422&destinations=${selectedLocation.longitude}%2C${selectedLocation.latitude}&units=imperial&key=AIzaSyB_SurU3rhRE5JQo9CugvX3OdD5TVLGU7Y`,
       {
@@ -154,7 +158,8 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
     }).catch((e) => {
       console.error(e);
     });
-    console.log(res);
+
+    // console.log(res);
 
     setInfoMessage(
       "Payment Initiated, kindly follow prompt to make payment to confirm order"
@@ -163,9 +168,55 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
     // onClose(); ////////////////////////HEREÈ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   }
 
+  function isStageSafe() {
+    if (
+      tabCount === 1 &&
+      (!senderName || !senderPhone || !senderEmail || !description)
+    ) {
+      setError("Kindly fill all fields");
+      return false;
+    } else if (
+      tabCount === 2 &&
+      (!recipientName ||
+        !recipientPhone ||
+        !recipientEmail ||
+        !selectedLocation)
+    ) {
+      setError("Kindly fill all fields");
+      return false;
+    } else if (tabCount === 3 && (!mno || !msisdn)) {
+      setError("Kindly fill all fields");
+      return false;
+    } else return true;
+  }
+
   if (!isOpen) {
     return null;
   }
+
+  function reduceItemQuantity(product) {
+    const indexToRemove = checkoutItems.findIndex((item) => item._id === product._id);
+    if (product.quantity > 1) {
+      checkoutItems[indexToRemove].quantity--;
+      setCheckoutItems([...checkoutItems]); // Create a new array to trigger a re-render
+    } else {
+      if (indexToRemove !== -1) {
+        if(checkoutItems.length === 1) {
+          onClose();
+        }
+        // Remove the item from the checkoutItems array
+        checkoutItems.splice(indexToRemove, 1);
+        setCheckoutItems([...checkoutItems]); // Create a new array to trigger a re-render
+      }
+    }
+  }
+  
+  function increaseItemQuantity(product) {
+    const indexToIncrease = checkoutItems.findIndex((item) => item._id === product._id);
+    checkoutItems[indexToIncrease].quantity += 1;
+    setCheckoutItems([...checkoutItems]); // Create a new array to trigger a re-render
+  }
+  
 
   return (
     <Modal header="Detailed View" closeModal={() => onClose()}>
@@ -194,7 +245,7 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {cartItems.map((item) => (
+                {checkoutItems.map((item) => (
                   <tr key={item._id}>
                     <td className="flex items-center px-6 py-1 whitespace-nowrap">
                       <div className="text-sm font-medium">
@@ -207,7 +258,34 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {item.price}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"></td>
+                    <td className="py-4 whitespace-nowrap text-right text-sm font-medium gap-1 flex flex-col">
+                      <div className="flex flex-row justify-end pr-2">
+                        {item.quantity}
+                      </div>
+                      <div className="flex flex-row justify-end gap-1">
+                        <div>
+                          <button
+                            onClick={() => {
+                              reduceItemQuantity(item);
+                              null;
+                            }}
+                            className="inline-flex items-center justify-center px-2 py-1 text-xs font-medium text-white bg-red-600 hover:bg-red-500 active:bg-red-700 rounded-lg"
+                          >
+                            <FontAwesomeIcon icon={faMinus} />
+                          </button>
+                        </div>
+                        <div>
+                          <button
+                            onClick={() => {
+                              increaseItemQuantity(item);
+                            }}
+                            className="inline-flex items-center justify-center px-2 py-1 text-xs font-medium text-white bg-green-600 hover:bg-green-500 active:bg-green-700 rounded-lg"
+                          >
+                            <FontAwesomeIcon icon={faPlus} />
+                          </button>
+                        </div>
+                      </div>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -354,7 +432,7 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
                   htmlFor="order_description"
                   className="text-xs font-medium mb-2"
                 >
-                  Order Description:
+                  Delivery Location:
                 </label>
                 <LocationPicker
                   selectedLocation={(location) => {
@@ -413,6 +491,8 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
               <button
                 disabled={loading}
                 onClick={() => {
+                  const safe = isStageSafe();
+                  if (!safe) return;
                   setTabCount(tabCount + 1);
                   setError(null);
                   setInfoMessage(null);
