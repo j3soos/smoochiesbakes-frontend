@@ -195,13 +195,15 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
   }
 
   function reduceItemQuantity(product) {
-    const indexToRemove = checkoutItems.findIndex((item) => item._id === product._id);
+    const indexToRemove = checkoutItems.findIndex(
+      (item) => item._id === product._id
+    );
     if (product.quantity > 1) {
       checkoutItems[indexToRemove].quantity--;
       setCheckoutItems([...checkoutItems]); // Create a new array to trigger a re-render
     } else {
       if (indexToRemove !== -1) {
-        if(checkoutItems.length === 1) {
+        if (checkoutItems.length === 1) {
           onClose();
         }
         // Remove the item from the checkoutItems array
@@ -210,66 +212,151 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
       }
     }
   }
-  
+
   function increaseItemQuantity(product) {
-    const indexToIncrease = checkoutItems.findIndex((item) => item._id === product._id);
+    const indexToIncrease = checkoutItems.findIndex(
+      (item) => item._id === product._id
+    );
     checkoutItems[indexToIncrease].quantity += 1;
     setCheckoutItems([...checkoutItems]); // Create a new array to trigger a re-render
   }
-  
 
   return (
     <Modal header="Detailed View" closeModal={() => onClose()}>
-      <div className="flex flex-col h-full w-full">
-        <div className="flex flex-row overflow-y-auto custom-scrollbar">
+      <div
+        cstyle={{
+          display: "flex",
+          flexDirection: "column",
+          height: "100%",
+          width: "100%",
+        }}
+      >
+        <div
+          style={{ display: "flex", flexDirection: "row", overflowY: "auto" }}
+          className="custom-scrollbar"
+        >
           {/* FIRST TAB */}
           {tabCount === 0 && (
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table
+              style={{
+                minWidth: "100%",
+                borderCollapse: "separate",
+                borderSpacing: "0",
+                borderBottom: "1px solid #e5e7eb",
+              }}
+            >
+              <thead style={{ backgroundColor: "#f9fafb" }}>
                 <tr>
                   <th
                     scope="col"
-                    className="px-6 py-2 text-xs font-semibold text-left text-gray-500 uppercase"
+                    style={{
+                      padding: "6px 12px",
+                      fontSize: "12px",
+                      fontWeight: "600",
+                      textAlign: "left",
+                      color: "rgb(128, 128, 128)",
+                      textTransform: "uppercase",
+                    }}
                   >
                     Product Name
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-2 text-xs font-semibold text-left text-gray-500 uppercase"
+                    style={{
+                      padding: "6px 12px",
+                      fontSize: "12px",
+                      fontWeight: "600",
+                      textAlign: "left",
+                      color: "rgb(128, 128, 128)",
+                      textTransform: "uppercase",
+                    }}
                   >
                     Price
                   </th>
-                  <th scope="col" className="relative px-6 py-2">
+                  <th scope="col" style={{ padding: "6px 12px" }}>
                     <span className="sr-only">Add to cart</span>
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody
+                style={{
+                  backgroundColor: "white",
+                  borderBottom: "1px solid #e5e7eb",
+                }}
+              >
                 {checkoutItems.map((item) => (
                   <tr key={item._id}>
-                    <td className="flex items-center px-6 py-1 whitespace-nowrap">
-                      <div className="text-sm font-medium">
-                        <div className="text-black">{item.name}</div>
-                        <div className="text-gray-500">
+                    <td
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        padding: "6px",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      <div style={{ fontSize: "14px", fontWeight: "600" }}>
+                        <div style={{ color: "black" }}>{item.name}</div>
+                        <div style={{ color: "rgb(128, 128, 128)" }}>
                           {item.stock} in stock
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td
+                      style={{
+                        padding: "6px",
+                        whiteSpace: "nowrap",
+                        fontSize: "14px",
+                        color: "rgb(128, 128, 128)",
+                      }}
+                    >
                       {item.price}
                     </td>
-                    <td className="py-4 whitespace-nowrap text-right text-sm font-medium gap-1 flex flex-col">
-                      <div className="flex flex-row justify-end pr-2">
+                    <td
+                      style={{
+                        padding: "6px",
+                        whiteSpace: "nowrap",
+                        textAlign: "right",
+                        fontSize: "14px",
+                        fontWeight: "600",
+                        gap: "1",
+                        display: "flex",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "flex-end",
+                          paddingRight: "8px",
+                        }}
+                      >
                         {item.quantity}
                       </div>
-                      <div className="flex flex-row justify-end gap-1">
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "flex-end",
+                          gap: "2px",
+                        }}
+                      >
                         <div>
                           <button
                             onClick={() => {
                               reduceItemQuantity(item);
                               null;
                             }}
-                            className="inline-flex items-center justify-center px-2 py-1 text-xs font-medium text-white bg-red-600 hover:bg-red-500 active:bg-red-700 rounded-lg"
+                            style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              padding: "4px",
+                              fontSize: "12px",
+                              fontWeight: "600",
+                              color: "white",
+                              backgroundColor: "red",
+                              borderRadius: "4px",
+                              cursor: "pointer",
+                            }}
                           >
                             <FontAwesomeIcon icon={faMinus} />
                           </button>
@@ -279,7 +366,18 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
                             onClick={() => {
                               increaseItemQuantity(item);
                             }}
-                            className="inline-flex items-center justify-center px-2 py-1 text-xs font-medium text-white bg-green-600 hover:bg-green-500 active:bg-green-700 rounded-lg"
+                            style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              padding: "4px",
+                              fontSize: "12px",
+                              fontWeight: "600",
+                              color: "white",
+                              backgroundColor: "green",
+                              borderRadius: "4px",
+                              cursor: "pointer",
+                            }}
                           >
                             <FontAwesomeIcon icon={faPlus} />
                           </button>
@@ -295,72 +393,119 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
           {/* SECOND TAB */}
           {tabCount === 1 && (
             <form className="w-full">
-              <div className="text-sm font-bold">SENDER DETAILS</div>
+              <div style={{ fontSize: "12px", fontWeight: "bold" }}>
+                SENDER DETAILS
+              </div>
 
-              <div className="mb-2">
+              <div style={{ marginBottom: "8px" }}>
                 <label
-                  htmlFor="sender_name"
-                  className="text-xs font-medium mb-2"
+                  htmlFor="name"
+                  style={{
+                    fontSize: "11px",
+                    fontWeight: "medium",
+                    marginBottom: "4px",
+                  }}
                 >
                   Your Name:
                 </label>
                 <input
                   type="text"
                   id="name"
-                  className="w-full px-3 py-1 border border-gray-400 focus:border-pink-500 rounded"
+                  style={{
+                    width: "100%",
+                    padding: "3px",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    transition: "border-color 0.2s ease-in-out",
+                  }}
                   value={senderName}
                   onChange={(event) => setSenderName(event.target.value)}
                   required
                 />
               </div>
 
-              <div className="mb-2">
+              <div style={{ marginBottom: "8px" }}>
                 <label
-                  htmlFor="sender_phone"
-                  className="text-xs font-medium mb-2"
+                  htmlFor="sender_number"
+                  style={{
+                    fontSize: "11px",
+                    fontWeight: "medium",
+                    marginBottom: "4px",
+                  }}
                 >
                   Your Phone Number:
                 </label>
                 <input
                   type="number"
                   id="sender_number"
-                  className="w-full px-3 py-1 border border-gray-400 focus:border-pink-500 rounded"
+                  style={{
+                    width: "100%",
+                    padding: "3px",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    transition: "border-color 0.2s ease-in-out",
+                  }}
                   value={senderPhone}
                   onChange={(event) => setSenderPhone(event.target.value)}
                   required
                 />
               </div>
 
-              <div className="mb-2">
+              <div style={{ marginBottom: "8px" }}>
                 <label
                   htmlFor="sender_email"
-                  className="text-xs font-medium mb-2"
+                  style={{
+                    fontSize: "11px",
+                    fontWeight: "medium",
+                    marginBottom: "4px",
+                  }}
                 >
                   Your Email:
                 </label>
                 <input
                   type="email"
                   id="sender_email"
-                  className="w-full px-3 py-1 border border-gray-400 focus:border-pink-500 rounded"
+                  style={{
+                    width: "100%",
+                    padding: "3px",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    transition: "border-color 0.2s ease-in-out",
+                  }}
                   value={senderEmail}
                   onChange={(event) => setSenderEmail(event.target.value)}
                   required
                 />
               </div>
 
-              <div className="mb-2">
+              <div style={{ marginBottom: "8px" }}>
                 <label
                   htmlFor="order_description"
-                  className="text-xs font-medium mb-2"
+                  style={{
+                    fontSize: "11px",
+                    fontWeight: "medium",
+                    marginBottom: "4px",
+                  }}
                 >
                   Order Description:
                 </label>
                 <textarea
                   id="order_description"
                   name="order_description"
-                  className="w-full bg-transparent rounded border border-black focus:border-pink-500 h-32 text-sm outline-none text-gray-700 px-3 transition-colors duration-200 ease-in-out"
+                  style={{
+                    width: "100%",
+                    backgroundColor: "transparent",
+                    borderRadius: "4px",
+                    border: "1px solid black",
+                    transition: "border-color 0.2s ease-in-out",
+                    height: "32px",
+                    fontSize: "12px",
+                    outline: "none",
+                    color: "gray",
+                    padding: "3px",
+                  }}
                   placeholder="Enter your order description..."
-                  required // Make the field required
+                  required
                   value={description}
                   onChange={(event) => {
                     setDescription(event.target.value);
@@ -374,63 +519,99 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
           {/* HERES THE THIRD TAB */}
           {tabCount === 2 && (
             <form className="w-full">
-              <div className="text-sm font-bold">RECIPIENT DETAILS</div>
+              <div style={{ fontSize: "12px", fontWeight: "bold" }}>
+                RECIPIENT DETAILS
+              </div>
 
-              <div className="mb-2">
+              <div style={{ marginBottom: "8px" }}>
                 <label
                   htmlFor="recipient_name"
-                  className="text-xs font-medium mb-2"
+                  style={{
+                    fontSize: "11px",
+                    fontWeight: "medium",
+                    marginBottom: "4px",
+                  }}
                 >
                   Recipient Name:
                 </label>
                 <input
                   type="text"
                   id="recipient_name"
-                  className="w-full px-3 py-1 border border-gray-400 focus:border-pink-500 rounded"
+                  style={{
+                    width: "100%",
+                    padding: "3px",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    transition: "border-color 0.2s ease-in-out",
+                  }}
                   value={recipientName}
                   onChange={(event) => setRecipientName(event.target.value)}
                   required
                 />
               </div>
 
-              <div className="mb-2">
+              <div style={{ marginBottom: "8px" }}>
                 <label
                   htmlFor="recipient_phone"
-                  className="text-xs font-medium mb-2"
+                  style={{
+                    fontSize: "11px",
+                    fontWeight: "medium",
+                    marginBottom: "4px",
+                  }}
                 >
                   Recipient Number:
                 </label>
                 <input
                   type="number"
-                  id="sender_number"
-                  className="w-full px-3 py-1 border border-gray-400 focus:border-pink-500 rounded"
+                  id="recipient_number"
+                  style={{
+                    width: "100%",
+                    padding: "3px",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    transition: "border-color 0.2s ease-in-out",
+                  }}
                   value={recipientPhone}
                   onChange={(event) => setRecipientPhone(event.target.value)}
                   required
                 />
               </div>
 
-              <div className="mb-2">
+              <div style={{ marginBottom: "8px" }}>
                 <label
                   htmlFor="recipient_email"
-                  className="text-xs font-medium mb-2"
+                  style={{
+                    fontSize: "11px",
+                    fontWeight: "medium",
+                    marginBottom: "4px",
+                  }}
                 >
                   Recipient Email:
                 </label>
                 <input
                   type="email"
                   id="recipient_email"
-                  className="w-full px-3 py-1 border border-gray-400 focus:border-pink-500 rounded"
+                  style={{
+                    width: "100%",
+                    padding: "3px",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    transition: "border-color 0.2s ease-in-out",
+                  }}
                   value={recipientEmail}
                   onChange={(event) => setRecipientEmail(event.target.value)}
                   required
                 />
               </div>
 
-              <div className="mb-2">
+              <div style={{ marginBottom: "8px" }}>
                 <label
                   htmlFor="order_description"
-                  className="text-xs font-medium mb-2"
+                  style={{
+                    fontSize: "11px",
+                    fontWeight: "medium",
+                    marginBottom: "4px",
+                  }}
                 >
                   Delivery Location:
                 </label>
@@ -445,17 +626,32 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
 
           {/* 4TH TAB HERE */}
           {tabCount === 3 && (
-            <form className="w-full">
-              <div className="text-sm font-bold">PAYMENT DETAILS</div>
+            <form style={{ width: "100%" }}>
+              <div style={{ fontSize: "12px", fontWeight: "bold" }}>
+                PAYMENT DETAILS
+              </div>
 
-              <div className="mb-2">
-                <label htmlFor="mno" className="text-xs font-medium mb-2">
+              <div style={{ marginBottom: "8px" }}>
+                <label
+                  htmlFor="mmo"
+                  style={{
+                    fontSize: "11px",
+                    fontWeight: "medium",
+                    marginBottom: "4px",
+                  }}
+                >
                   Mobile Money Operator:
                 </label>
                 <select
                   type="text"
                   id="mmo"
-                  className="w-full px-3 py-1 border border-gray-400 focus:border-pink-500 rounded"
+                  style={{
+                    width: "100%",
+                    padding: "3px",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    transition: "border-color 0.2s ease-in-out",
+                  }}
                   value={mno}
                   onChange={(event) => setMno(event.target.value)}
                   required
@@ -467,14 +663,27 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
                 </select>
               </div>
 
-              <div className="mb-2">
-                <label htmlFor="msisdn" className="text-xs font-medium mb-2">
+              <div style={{ marginBottom: "8px" }}>
+                <label
+                  htmlFor="msisdn"
+                  style={{
+                    fontSize: "11px",
+                    fontWeight: "medium",
+                    marginBottom: "4px",
+                  }}
+                >
                   Payment Number:
                 </label>
                 <input
                   type="number"
                   id="msisdn"
-                  className="w-full px-3 py-1 border border-gray-400 focus:border-pink-500 rounded"
+                  style={{
+                    width: "100%",
+                    padding: "3px",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    transition: "border-color 0.2s ease-in-out",
+                  }}
                   value={msisdn}
                   onChange={(event) => setMsisdn(event.target.value)}
                   required
@@ -485,7 +694,14 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
         </div>
 
         {/* BUTTONS */}
-        <div className="flex flex-row-reverse w-full gap-3 ">
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row-reverse",
+            width: "100%",
+            gap: "0.75rem",
+          }}
+        >
           <div>
             {tabCount < 3 && (
               <button
@@ -497,7 +713,14 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
                   setError(null);
                   setInfoMessage(null);
                 }}
-                className="bg-pink-400 hover:bg-pink-700 text-white font-bold rounded-lg px-4 p-1"
+                style={{
+                  backgroundColor: "#F875AA",
+                  color: "white",
+                  fontWeight: "bold",
+                  borderRadius: "8px",
+                  padding: "4px 8px",
+                  cursor: "pointer",
+                }}
               >
                 Next
               </button>
@@ -511,7 +734,14 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
                 onClick={() => {
                   submitForm();
                 }}
-                className="bg-pink-400 hover:bg-pink-700 text-white font-bold rounded-lg px-2 p-1"
+                style={{
+                  backgroundColor: "#F875AA",
+                  color: "white",
+                  fontWeight: "bold",
+                  borderRadius: "8px",
+                  padding: "4px 8px",
+                  cursor: "pointer",
+                }}
               >
                 Submit
               </button>
@@ -527,7 +757,14 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
                   setError(null);
                   setInfoMessage(null);
                 }}
-                className="bg-pink-400 hover:bg-pink-700 text-white font-bold rounded-lg px-2 p-1"
+                style={{
+                  backgroundColor: "#F875AA",
+                  color: "white",
+                  fontWeight: "bold",
+                  borderRadius: "8px",
+                  padding: "4px 8px",
+                  cursor: "pointer",
+                }}
               >
                 Previous
               </button>
@@ -535,8 +772,8 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
           </div>
         </div>
 
-        <div className="text-green-500">{infoMessage}</div>
-        <div className="text-red-500">{error}</div>
+        <div style={{ color: "green" }}>{infoMessage}</div>
+        <div style={{ color: "red" }}>{error}</div>
       </div>
     </Modal>
   );

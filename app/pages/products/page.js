@@ -116,7 +116,8 @@ export default function OrderPage() {
         category: "Banana Cakes",
         price: 50,
         __v: 0,
-        bg_url: "https://images.pexels.com/photos/15925185/pexels-photo-15925185/free-photo-of-pieces-of-homemade-bread.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        bg_url:
+          "https://images.pexels.com/photos/15925185/pexels-photo-15925185/free-photo-of-pieces-of-homemade-bread.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       },
     ],
     cupcakes: [
@@ -142,7 +143,8 @@ export default function OrderPage() {
         category: "Cupcakes",
         price: 4.0,
         __v: 0,
-        bg_url: "https://images.pexels.com/photos/6375497/pexels-photo-6375497.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        bg_url:
+          "https://images.pexels.com/photos/6375497/pexels-photo-6375497.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       },
       {
         _id: "652c7a44354349fb5629a7d5",
@@ -150,7 +152,8 @@ export default function OrderPage() {
         category: "Cupcakes",
         price: 4.0,
         __v: 0,
-        bg_url: "https://images.pexels.com/photos/7474203/pexels-photo-7474203.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        bg_url:
+          "https://images.pexels.com/photos/7474203/pexels-photo-7474203.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       },
     ],
   };
@@ -184,7 +187,16 @@ export default function OrderPage() {
   };
 
   return (
-    <main className=" bg-[#ffe6ee] h-full min-h-screen text-gray-700 font-sans transition-all duration-500">
+    <main
+      style={{
+        background: "#ffe6ee",
+        height: "100%",
+        minHeight: "100vh",
+        color: "black",
+        fontFamily: "sans-serif",
+        transition: "all 0.5s",
+      }}
+    >
       {/* <Header /> */}
 
       {viewProductModalOpen && (
@@ -208,29 +220,92 @@ export default function OrderPage() {
         />
       )}
 
-      <div className="flex flex-col justify-center text-center gap-3 py-10">
-        <div className="text-4xl font-bold font-sans">{`SMOOCHIES BAKES`}</div>
-        <div className="font-light font-sans">
-          {`Welcome to Smoochies Bakes. This our easy order/grab and go portal. For
-        customized orders, kindly WhatsApp 0554181995/0247069070.`}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          textAlign: "center",
+          gap: "1.5rem",
+          paddingTop: "2.5rem",
+        }}
+      >
+        <div
+          style={{
+            fontSize: "2.5rem",
+            fontWeight: "bold",
+            fontFamily: "sans-serif",
+          }}
+        >{`SMOOCHIES BAKES`}</div>
+        <div style={{ fontWeight: "normal", fontFamily: "sans-serif" }}>
+          {`Welcome to Smoochies Bakes. This our easy order/grab and go portal. For customized orders, kindly WhatsApp 0554181995/0247069070.`}
         </div>
       </div>
 
       {/* select products*/}
-      <div className="flex flex-col content-center w-screen h-fit gap-10 py-12">
-        <div className="flex flex-row justify-center text-2xl font-semibold">
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          width: "100vw",
+          gap: "1.25rem",
+          paddingTop: "1.875rem",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            fontSize: "1.5rem",
+            fontWeight: "bold",
+          }}
+        >
           SELECT PRODUCTS
         </div>
 
-        <div className="flex flex-col items-center p-5">
-          <div className="flex flex-row justify-center text-xl font-semibold pb-3">
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            padding: "1.25rem",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              fontSize: "1rem",
+              fontWeight: "bold",
+              paddingBottom: "0.75rem",
+            }}
+          >
             FULL CAKE LIST
           </div>
-          <div className="bg-white rounded-xl grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-5 lg:px-8 font-normal px-5 pb-5 pt-7 w-fit transition-all duration-700">
+          <div
+            style={{
+              background: "white",
+              borderRadius: "1rem",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr 1fr 1fr",
+              gap: "1rem",
+              padding: "2.625rem",
+              paddingTop: "1.125rem",
+              width: "fit-content",
+              transition: "all 0.7s",
+            }}
+          >
             {products.fullcakes.map((item, name) => (
               <div
                 key={name}
-                className="flex flex-col gap-3 justify-self-center text-center"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.375rem",
+                  justifyContent: "center",
+                  textAlign: "center",
+                }}
               >
                 <button
                   onClick={() => {
@@ -240,14 +315,17 @@ export default function OrderPage() {
                   }}
                 >
                   <div
-                    className="rounded-lg w-52 h-48 transition-all hover:scale-105"
                     style={{
+                      borderRadius: "0.875rem",
+                      width: "13rem",
+                      height: "12rem",
+                      transition: "all 0.2s",
                       backgroundImage: `url(${item.bg_url})`,
                       backgroundSize: "cover",
                       backgroundRepeat: "no-repeat",
                     }}
                   />
-                  <div className="flex flex-col">
+                  <div style={{ display: "flex", flexDirection: "column" }}>
                     <div>{item.name}</div>
                     <div>Ghs {item.price}</div>
                   </div>
@@ -257,15 +335,48 @@ export default function OrderPage() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center p-5">
-          <div className="flex flex-row justify-center text-xl font-semibold pb-3">
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            padding: "1.25rem",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              fontSize: "1rem",
+              fontWeight: "bold",
+              paddingBottom: "0.75rem",
+            }}
+          >
             CUPCAKES LIST
           </div>
-          <div className="bg-white rounded-xl grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-5 lg:px-8 font-normal px-5 pb-5 pt-7 w-fit transition-all duration-700">
+          <div
+            style={{
+              background: "white",
+              borderRadius: "1rem",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr 1fr 1fr",
+              gap: "1rem",
+              padding: "2.625rem",
+              paddingTop: "1.125rem",
+              width: "fit-content",
+              transition: "all 0.7s",
+            }}
+          >
             {products.cupcakes.map((item, name) => (
               <div
                 key={name}
-                className="flex flex-col gap-3 justify-self-center text-center"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.375rem",
+                  justifyContent: "center",
+                  textAlign: "center",
+                }}
               >
                 <button
                   onClick={() => {
@@ -275,14 +386,17 @@ export default function OrderPage() {
                   }}
                 >
                   <div
-                    className="rounded-lg w-52 h-48 transition-all hover:scale-105"
                     style={{
+                      borderRadius: "0.875rem",
+                      width: "13rem",
+                      height: "12rem",
+                      transition: "all 0.2s",
                       backgroundImage: `url(${item.bg_url})`,
                       backgroundSize: "cover",
                       backgroundRepeat: "no-repeat",
                     }}
                   />
-                  <div className="flex flex-col">
+                  <div style={{ display: "flex", flexDirection: "column" }}>
                     <div>{item.name}</div>
                     <div>Ghs {item.price}</div>
                   </div>
@@ -292,15 +406,48 @@ export default function OrderPage() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center p-5">
-          <div className="flex flex-row justify-center text-xl font-semibold pb-3">
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            padding: "1.25rem",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              fontSize: "1rem",
+              fontWeight: "bold",
+              paddingBottom: "0.75rem",
+            }}
+          >
             BANANA CAKES LIST
           </div>
-          <div className="bg-white rounded-xl grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-2 gap-5 lg:px-8 font-normal px-5 pb-5 pt-7 w-fit transition-all duration-700">
+          <div
+            style={{
+              background: "white",
+              borderRadius: "1rem",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr 1fr 1fr",
+              gap: "1rem",
+              padding: "2.625rem",
+              paddingTop: "1.125rem",
+              width: "fit-content",
+              transition: "all 0.7s",
+            }}
+          >
             {products.bananacakes.map((item, name) => (
               <div
                 key={name}
-                className="flex flex-col gap-3 justify-self-center text-center"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.375rem",
+                  justifyContent: "center",
+                  textAlign: "center",
+                }}
               >
                 <button
                   onClick={() => {
@@ -310,14 +457,17 @@ export default function OrderPage() {
                   }}
                 >
                   <div
-                    className="rounded-lg w-52 h-48 transition-all hover:scale-105"
                     style={{
+                      borderRadius: "0.875rem",
+                      width: "13rem",
+                      height: "12rem",
+                      transition: "all 0.2s",
                       backgroundImage: `url(${item.bg_url})`,
                       backgroundSize: "cover",
                       backgroundRepeat: "no-repeat",
                     }}
                   />
-                  <div className="flex flex-col">
+                  <div style={{ display: "flex", flexDirection: "column" }}>
                     <div>{item.name}</div>
                     <div>Ghs {item.price}</div>
                   </div>
@@ -329,7 +479,7 @@ export default function OrderPage() {
       </div>
 
       <button
-        className="fixed bottom-0 right-0 p-4"
+        style={{ position: "fixed", bottom: "0", right: "0", padding: "1rem" }}
         onClick={() => {
           setViewCheckoutModal(true);
         }}
@@ -338,19 +488,71 @@ export default function OrderPage() {
         {cartItems.length === 0 ? (
           <></>
         ) : (
-          <span className="relative flex h-3 w-3">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-pink-500"></span>
+          <span
+            style={{
+              position: "relative",
+              display: "flex",
+              height: "0.75rem",
+              width: "0.75rem",
+            }}
+          >
+            <span
+              style={{
+                position: "absolute",
+                display: "inline-flex",
+                height: "100%",
+                width: "100%",
+                borderRadius: "50%",
+                background: "#f06292",
+                opacity: "0.75",
+              }}
+            ></span>
+            <span
+              style={{
+                position: "relative",
+                display: "inline-flex",
+                borderRadius: "50%",
+                height: "0.75rem",
+                width: "0.75rem",
+                background: "#ec4899",
+              }}
+            ></span>
           </span>
         )}
-        <div className="btn bg-white border border-gray-700 rounded-lg px-3 py-2 w-20">
-          <FontAwesomeIcon icon={faShoppingCart} className="text-xl text-black hover:opacity-60"/>
+        <div
+          style={{
+            background: "white",
+            border: "1px solid #7c7c7c",
+            borderRadius: "1rem",
+            padding: "0.75rem",
+            width: "5rem",
+          }}
+        >
+          <FontAwesomeIcon
+            icon={faShoppingCart}
+            style={{
+              fontSize: "1.25rem",
+              color: "black",
+              ":hover": { opacity: "0.6" },
+            }}
+          />
         </div>
       </button>
 
-      <div className="bg-[url(/patterns/pattern02.jpg)] bg-contain text-center content-center justify-center items-center align-middle text-white h-80">
-        FOOTER HERE WAI
-      </div>
+      <div
+        style={{
+          background: "url(/patterns/pattern02.jpg)",
+          backgroundSize: "contain",
+          textAlign: "center",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          alignContent: "middle",
+          color: "white",
+          height: "10rem",
+        }}
+      >
+       </div>
     </main>
   );
 }
