@@ -26,23 +26,21 @@ const ViewProductModal = ({
         onClose();
       }}
     >
-      <div className="flex flex-col h-full w-full rounded">
-        <div
-          className="rounded-lg w-full h-96"
-          style={{
-            backgroundImage: `url(${selectedProduct.bg_url})`,
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-          }}
-        />
-        <div className="flex flex-row text-black font-semibold text-sm">
+      <div style={{display: 'flex', flexDirection: 'column', height: '100%', width: '100%'}}>
+        <div className="rounded-lg w-full h-96" 
+        style={{
+          backgroundImage: `url(${selectedProduct.bg_url})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center"
+        }}/>
+        <div className="flexRowTextBlack">
           NAME: {name}
         </div>
-        <div className="flex flex-row text-black font-semibold text-sm">
+        <div className="flexRowTextBlack">
           PRICE: GHS {price}
         </div>
-        <div className="flex flex-row text-black font-light pb-2">
+        <div className="flexRowTextBlack">
           {description}
         </div>
         <button
@@ -50,12 +48,21 @@ const ViewProductModal = ({
             setAddedToCart(true);
             handleAddToCart();
           }}
-          className="btn bg-pink-500 rounded-md w-28 text-white font-bold text-sm py-2 px-3"
+          style={{
+            display: 'flex',
+            backgroundColor: '#f472b6', 
+            borderRadius: '0.375rem', 
+            width: '7rem', 
+            color: 'white', 
+            fontWeight: 'bold',
+            fontSize: '0.875rem', 
+            padding: '0.5rem 0.75rem',
+          }}
         >
           Add to Cart
         </button>
         {addedToCart && (
-          <div className="text-xs font-extralight text-red-800">
+          <div style={{ fontSize: '0.75rem', fontWeight: 'lighter', color: '#e53e3e' }}>
             Product Added To Cart
           </div>
         )}
