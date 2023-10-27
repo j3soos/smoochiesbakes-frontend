@@ -33,6 +33,26 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
 
 
   async function loadGoogleMapsAutocomplete() {
+    // Check if the Google Maps Places Autocomplete script is already loaded
+    if (window.google || window.google.maps || window.google.maps.places) {
+      // The Google Maps Places Autocomplete script is already loaded
+      // You can initialize it here or perform other actions if needed
+      const input = document.getElementById("location-input");
+      const autocomplete = new window.google.maps.places.Autocomplete(input);
+
+      autocomplete.addListener("place_changed", async () => {
+        const place = autocomplete.getPlace();
+        if (place.geometry) {
+          setSelectedLocation({
+            name: place.name,
+            latitude: place.geometry.location.lat(),
+            longitude: place.geometry.location.lng(),
+          });
+
+          setConfirmedLocation(true);
+        }
+      });
+    } else {
       // The Google Maps Places Autocomplete script is not loaded, so load it
       const script = document.createElement("script");
       script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places`;
@@ -55,6 +75,8 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
             setConfirmedLocation(true);
           }
         });
+      };
+
       document.head.appendChild(script);
     }
   }
