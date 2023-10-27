@@ -26,6 +26,55 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
   const [distance, setDistance] = useState(0);
   const [CalcDistance, setCalcDistance] = useState(false);
 
+  async function loadGoogleMapsAutocomplete(){  
+    // Check if the Google Maps Places Autocomplete script is already loaded
+  if ( (window.google) || (window.google.maps) || (window.google.maps.places) ) {
+    // The Google Maps Places Autocomplete script is already loaded
+    // You can initialize it here or perform other actions if needed
+    const input = document.getElementById("location-input");
+    const autocomplete = new window.google.maps.places.Autocomplete(input);
+
+    autocomplete.addListener("place_changed", async () => {
+      const place = autocomplete.getPlace();
+      if (place.geometry) {
+        setSelectedLocation({
+          name: place.name,
+          latitude: place.geometry.location.lat(),
+          longitude: place.geometry.location.lng(),
+        });
+
+        setConfirmedLocation(true);
+      }
+    });
+  } else {
+    // The Google Maps Places Autocomplete script is not loaded, so load it
+    const script = document.createElement("script");
+    script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places`;
+    script.defer = true;
+    script.async = true;
+
+    script.onload = () => {
+      const input = document.getElementById("location-input");
+      const autocomplete = new window.google.maps.places.Autocomplete(input);
+
+      autocomplete.addListener("place_changed", async () => {
+        const place = autocomplete.getPlace();
+        if (place.geometry) {
+          setSelectedLocation({
+            name: place.name,
+            latitude: place.geometry.location.lat(),
+            longitude: place.geometry.location.lng(),
+          });
+
+          setConfirmedLocation(true);
+        }
+      });
+    };
+
+    document.head.appendChild(script);
+  }
+  }
+
   async function calcDistance() {
     const res = await fetch(
       `https://maps.googleapis.com/maps/api/distancematrix/json?origins=5.6569667%2C-0.0261422&destinations=${selectedLocation.longitude}%2C${selectedLocation.latitude}&units=imperial&key=AIzaSyB_SurU3rhRE5JQo9CugvX3OdD5TVLGU7Y`,
@@ -38,69 +87,6 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
       }
     );
     setDistance(res.rows[0].elements[0].distance.value);
-  }
-
-  function LocationPicker() {
-    useEffect(() => {
-      // Load the Google Maps JavaScript API
-      const script = document.createElement("script");
-      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyA6fR9HKFU9nK1IWIIBgr1RBZkfMS5ZDTY&libraries=places`;
-      script.defer = true;
-      script.async = true;
-
-      script.onload = () => {
-        // Initialize the Google Maps Places Autocomplete
-        const input = document.getElementById("location-input");
-        const autocomplete = new google.maps.places.Autocomplete(input);
-
-        // Listen for place changes
-        autocomplete.addListener("place_changed", async () => {
-          const place = autocomplete.getPlace();
-          if (place.geometry) {
-            setSelectedLocation({
-              name: place.name,
-              latitude: place.geometry.location.lat(),
-              longitude: place.geometry.location.lng(),
-            });
-
-            setConfirmedLocation(true);
-          }
-        });
-      };
-
-      document.head.appendChild(script);
-    }, []);
-
-    return (
-      <div>
-        <input
-          id="location-input"
-          type="text"
-          placeholder={
-            !confirmedLocation ? "Search for a location" : "Location Confirmed"
-          }
-          disabled={!confirmedLocation ? false : true}
-          className="p-2 border border-gray-400 w-full rounded"
-        />
-        {selectedLocation && (
-          <div className="mt-4">
-            <button
-              className="btn py-1 px-2 hover:bg-pink-600 bg-pink-400 rounded-lg text-sm font-bold text-white"
-              onClick={() => {
-                setConfirmedLocation(false);
-                setSelectedLocation(null);
-              }}
-            >
-              change location
-            </button>
-            <p>Selected Location: {selectedLocation.name}</p>
-            <p>Latitude: {selectedLocation.latitude}</p>
-            <p>Longitude: {selectedLocation.longitude}</p>
-            {calcDistance && <p>Delivey Price: {distance / 440}</p>}
-          </div>
-        )}
-      </div>
-    );
   }
 
   async function submitForm() {
@@ -222,6 +208,7 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
   }
 
   return (
+
     <Modal header="Detailed View" closeModal={() => onClose()}>
       <div
         cstyle={{
@@ -615,11 +602,52 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
                 >
                   Delivery Location:
                 </label>
-                <LocationPicker
+                {/* <LocationPicker
                   selectedLocation={(location) => {
                     setSelectedLocation(location);
                   }}
+                /> */}
+                <input
+                  id="location-input"
+                  type="text"
+                  placeholder={
+                    !confirmedLocation
+                      ? "Search for a location"
+                      : "Location Confirmed"
+                  }
+                  disabled={!confirmedLocation ? false : true}
+                  style={{
+                    padding: "0.5rem",
+                    border: "1px solid #ccc",
+                    width: "100%",
+                    borderRadius: "4px",
+                  }}
                 />
+                {selectedLocation && (
+                  <div style={{ marginTop: "1rem" }}>
+                    <button
+                      style={{
+                        padding: "0.25rem 0.5rem",
+                        backgroundColor: "#fuchsia",
+                        color: "white",
+                        borderRadius: "8px",
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        setConfirmedLocation(false);
+                        setSelectedLocation(null);
+                      }}
+                    >
+                      Change Location
+                    </button>
+                    <p>Selected Location: {selectedLocation.name}</p>
+                    <p>Latitude: {selectedLocation.latitude}</p>
+                    <p>Longitude: {selectedLocation.longitude}</p>
+                    {calcDistance && <p>Delivery Price: {distance / 440}</p>}
+                  </div>
+                )}
               </div>
             </form>
           )}

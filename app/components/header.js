@@ -25,9 +25,9 @@ export default function Header() {
           </div>
 
           {/* Put logo here */}
-          <div className="basis-1/3 text-3xl text-center content-center">
+          <div className="basis-1/3 text-3xl text-center content-center font-medium">
             <a href="/">
-              {process.env.COMPANY_NAME}
+              SMOOCHIES BAKES
             </a>
           </div>
 
