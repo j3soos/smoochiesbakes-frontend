@@ -25,35 +25,18 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
   const [loading, setLoading] = useState(false);
   const [distance, setDistance] = useState(0);
   const [CalcDistance, setCalcDistance] = useState(false);
+  const [isGift, setIsGift] = useState(false);
 
-  async function loadGoogleMapsAutocomplete(){  
+  const handleCheckboxChange = () => {
+    setIsGift(!isGift);
+  };
+
+
+  async function loadGoogleMapsAutocomplete() {
     // Check if the Google Maps Places Autocomplete script is already loaded
-  if ( (window.google) || (window.google.maps) || (window.google.maps.places) ) {
-    // The Google Maps Places Autocomplete script is already loaded
-    // You can initialize it here or perform other actions if needed
-    const input = document.getElementById("location-input");
-    const autocomplete = new window.google.maps.places.Autocomplete(input);
-
-    autocomplete.addListener("place_changed", async () => {
-      const place = autocomplete.getPlace();
-      if (place.geometry) {
-        setSelectedLocation({
-          name: place.name,
-          latitude: place.geometry.location.lat(),
-          longitude: place.geometry.location.lng(),
-        });
-
-        setConfirmedLocation(true);
-      }
-    });
-  } else {
-    // The Google Maps Places Autocomplete script is not loaded, so load it
-    const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places`;
-    script.defer = true;
-    script.async = true;
-
-    script.onload = () => {
+    if (window.google || window.google.maps || window.google.maps.places) {
+      // The Google Maps Places Autocomplete script is already loaded
+      // You can initialize it here or perform other actions if needed
       const input = document.getElementById("location-input");
       const autocomplete = new window.google.maps.places.Autocomplete(input);
 
@@ -69,10 +52,33 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
           setConfirmedLocation(true);
         }
       });
-    };
+    } else {
+      // The Google Maps Places Autocomplete script is not loaded, so load it
+      const script = document.createElement("script");
+      script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places`;
+      script.defer = true;
+      script.async = true;
 
-    document.head.appendChild(script);
-  }
+      script.onload = () => {
+        const input = document.getElementById("location-input");
+        const autocomplete = new window.google.maps.places.Autocomplete(input);
+
+        autocomplete.addListener("place_changed", async () => {
+          const place = autocomplete.getPlace();
+          if (place.geometry) {
+            setSelectedLocation({
+              name: place.name,
+              latitude: place.geometry.location.lat(),
+              longitude: place.geometry.location.lng(),
+            });
+
+            setConfirmedLocation(true);
+          }
+        });
+      };
+
+      document.head.appendChild(script);
+    }
   }
 
   async function calcDistance() {
@@ -208,7 +214,6 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
   }
 
   return (
-
     <Modal header="Detailed View" closeModal={() => onClose()}>
       <div
         cstyle={{
@@ -381,7 +386,7 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
           {tabCount === 1 && (
             <form className="w-full">
               <div style={{ fontSize: "12px", fontWeight: "bold" }}>
-                SENDER DETAILS
+                DETAILS
               </div>
 
               <div style={{ marginBottom: "8px" }}>
@@ -500,6 +505,18 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
                   }}
                 ></textarea>
               </div>
+              <div>
+                <label>
+                  {/* Step 4: Render the checkbox input and label */}
+                  <input
+                    type="checkbox"
+                    disabled={ !senderName||!senderEmail||!senderPhone||!description ? true : false}
+                    checked={isGift}
+                    onChange={handleCheckboxChange} 
+                  />
+                  Is this a gift?
+                </label>
+              </div>
             </form>
           )}
 
@@ -531,8 +548,9 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
                     borderRadius: "4px",
                     transition: "border-color 0.2s ease-in-out",
                   }}
-                  value={recipientName}
+                  value={isGift ? recipientName : senderName}
                   onChange={(event) => setRecipientName(event.target.value)}
+                  disabled={!isGift}
                   required
                 />
               </div>
@@ -558,8 +576,9 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
                     borderRadius: "4px",
                     transition: "border-color 0.2s ease-in-out",
                   }}
-                  value={recipientPhone}
+                  value={isGift ? recipientPhone : senderPhone}
                   onChange={(event) => setRecipientPhone(event.target.value)}
+                  disabled={!isGift}
                   required
                 />
               </div>
@@ -585,8 +604,9 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
                     borderRadius: "4px",
                     transition: "border-color 0.2s ease-in-out",
                   }}
-                  value={recipientEmail}
+                  value={isGift ? recipientEmail : senderEmail }
                   onChange={(event) => setRecipientEmail(event.target.value)}
+                  disabled={!isGift}
                   required
                 />
               </div>
