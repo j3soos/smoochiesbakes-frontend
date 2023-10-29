@@ -479,7 +479,7 @@ export default function OrderPage() {
       </div>
 
       <button
-        style={{ position: "fixed", bottom: "0", right: "0", padding: "1rem" }}
+        style={{ position: "fixed", top: "0", right: "0", padding: "1rem" }}
         onClick={() => {
           setViewCheckoutModal(true);
         }}

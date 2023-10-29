@@ -77,6 +77,7 @@ async function orderRecon() {
 // API FUNCTIONS
 // createOrder
 const makeOrder = async (req, res) => {
+  console.log(req.body)
   const { payment, recipient, sender, products, delivery, total_price } =
     req.body;
 

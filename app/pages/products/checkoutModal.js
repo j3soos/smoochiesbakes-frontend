@@ -94,54 +94,8 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
     setIsGift(!isGift);
   };
 
-
   async function loadGoogleMapsAutocomplete() {
-    // Check if the Google Maps Places Autocomplete script is already loaded
-    if (window.google || window.google.maps || window.google.maps.places) {
-      // The Google Maps Places Autocomplete script is already loaded
-      // You can initialize it here or perform other actions if needed
-      const input = document.getElementById("location-input");
-      const autocomplete = new window.google.maps.places.Autocomplete(input);
-
-      autocomplete.addListener("place_changed", async () => {
-        const place = autocomplete.getPlace();
-        if (place.geometry) {
-          setSelectedLocation({
-            name: place.name,
-            latitude: place.geometry.location.lat(),
-            longitude: place.geometry.location.lng(),
-          });
-
-          setConfirmedLocation(true);
-        }
-      });
-    } else {
-      // The Google Maps Places Autocomplete script is not loaded, so load it
-      const script = document.createElement("script");
-      script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places`;
-      script.defer = true;
-      script.async = true;
-
-      script.onload = () => {
-        const input = document.getElementById("location-input");
-        const autocomplete = new window.google.maps.places.Autocomplete(input);
-
-        autocomplete.addListener("place_changed", async () => {
-          const place = autocomplete.getPlace();
-          if (place.geometry) {
-            setSelectedLocation({
-              name: place.name,
-              latitude: place.geometry.location.lat(),
-              longitude: place.geometry.location.lng(),
-            });
-
-            setConfirmedLocation(true);
-          }
-        });
-      };
-
-      document.head.appendChild(script);
-    }
+    null
   }
 
   async function calcDistance() {
@@ -158,9 +112,9 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
     setDistance(res.rows[0].elements[0].distance.value);
   }
 
-  useEffect(()=>{
-    loadGoogleMapsAutocomplete()
-  }, [])
+  useEffect(() => {
+    loadGoogleMapsAutocomplete();
+  }, []);
 
   async function submitForm() {
     setLoading(true);
@@ -175,12 +129,12 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
       !recipientEmail ||
       !description ||
       !mno ||
-      !msisdn ||
-      !confirmedLocation
+      !msisdn
+      // !confirmedLocation
     ) {
-      setError("Kindly Fill All Fields!!!!");
+      // setError("Kindly Fill All Fields!!!!");
       setLoading(false);
-      return;
+      // return;
     }
 
     const data = {
@@ -224,30 +178,31 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
       "Payment Initiated, kindly follow prompt to make payment to confirm order"
     );
     setLoading(false);
-    onClose();
-    window.location.reload();
+    // onClose();
+    // window.location.reload();s
   }
 
   function isStageSafe() {
-    if (
-      tabCount === 1 &&
-      (!senderName || !senderPhone || !senderEmail || !description)
-    ) {
-      setError("Kindly fill all fields");
-      return false;
-    } else if (
-      tabCount === 2 &&
-      (!recipientName ||
-        !recipientPhone ||
-        !recipientEmail ||
-        !selectedLocation)
-    ) {
-      setError("Kindly fill all fields");
-      return false;
-    } else if (tabCount === 3 && (!mno || !msisdn)) {
-      setError("Kindly fill all fields");
-      return false;
-    } else return true;
+    // if (
+    //   tabCount === 1 &&
+    //   (!senderName || !senderPhone || !senderEmail || !description)
+    // ) {
+    //   setError("Kindly fill all fields");
+    //   return false;
+    // } else if (
+    //   tabCount === 2 &&
+    //   (!recipientName ||
+    //     !recipientPhone ||
+    //     !recipientEmail)
+    //     // confirmedLocation)
+    // ) {
+    //   setError("Kindly fill all fields");
+    //   return false;
+    // } else if (tabCount === 3 && (!mno || !msisdn)) {
+    //   setError("Kindly fill all fields");
+    //   return false;
+    // } else return true;
+    return true      //you can comment here  kkopoku
   }
 
   if (!isOpen) {
@@ -282,7 +237,6 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
   }
 
   return (
-    
     <Modal header="Detailed View" closeModal={() => onClose()}>
       <div
         cstyle={{
@@ -579,9 +533,16 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
                   {/* Step 4: Render the checkbox input and label */}
                   <input
                     type="checkbox"
-                    disabled={ !senderName||!senderEmail||!senderPhone||!description ? true : false}
+                    disabled={
+                      !senderName ||
+                      !senderEmail ||
+                      !senderPhone ||
+                      !description
+                        ? true
+                        : false
+                    }
                     checked={isGift}
-                    onChange={handleCheckboxChange} 
+                    onChange={handleCheckboxChange}
                   />
                   Is this a gift?
                 </label>
@@ -673,7 +634,7 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
                     borderRadius: "4px",
                     transition: "border-color 0.2s ease-in-out",
                   }}
-                  value={isGift ? recipientEmail : senderEmail }
+                  value={isGift ? recipientEmail : senderEmail}
                   onChange={(event) => setRecipientEmail(event.target.value)}
                   disabled={!isGift}
                   required
@@ -691,12 +652,12 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
                 >
                   Delivery Location:
                 </label>
-                {/* <LocationPicker
+                <LocationPicker
                   selectedLocation={(location) => {
                     setSelectedLocation(location);
                   }}
-                /> */}
-                <input
+                />
+                {/* <input
                   id="location-input"
                   type="text"
                   placeholder={
@@ -711,8 +672,8 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
                     width: "100%",
                     borderRadius: "4px",
                   }}
-                />
-                {selectedLocation && (
+                /> */}
+                {/* {selectedLocation && (
                   <div style={{ marginTop: "1rem" }}>
                     <button
                       style={{
@@ -736,7 +697,7 @@ const CheckoutModal = ({ isOpen, onClose, cartItems }) => {
                     <p>Longitude: {selectedLocation.longitude}</p>
                     {calcDistance && <p>Delivery Price: {distance / 440}</p>}
                   </div>
-                )}
+                )} */}
               </div>
             </form>
           )}
